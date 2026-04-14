@@ -56,13 +56,19 @@ function AppInner() {
     [activeVerticalId, state]
   )
 
-  function handleLogin(username, password) {
-    const result = login(username, password)
-    if (result.ok) {
-      if (result.langPref) setLang(result.langPref)
+  async function handleLogin(email, password) {
+  const result = await login(email, password)
+
+  if (result.ok) {
+    if (result.langPref) setLang(result.langPref)
+
+    if (result.role === 'admin') {
+      navigate('admin')
+    } else {
       navigate('employee-portal')
     }
   }
+}
 
   function handleLogout() {
     logout()
