@@ -11,8 +11,9 @@ export default function EmployeeLogin({ onLogin, loginError, onClearError }) {
 
   function handleSubmit(e) {
     e.preventDefault()
-    if (!username.trim() || !password.trim()) return
-    onLogin(username.trim(), password)
+    if (!email.trim() || !password.trim()) return
+    onLogin(email.trim(), password)
+    
   }
 
   // loginError ist ein i18n-Schlüssel (z.B. 'errorCreds') oder leer
