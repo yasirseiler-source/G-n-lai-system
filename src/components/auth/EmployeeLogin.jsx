@@ -15,8 +15,7 @@ export default function EmployeeLogin({ onLogin, loginError, onClearError }) {
     onLogin(email.trim(), password)
     
   }
-
-  // loginError ist ein i18n-Schlüssel (z.B. 'errorCreds') oder leer
+  
   const errorMsg = loginError ? t('auth', loginError) : ''
 
   return (
@@ -45,9 +44,9 @@ export default function EmployeeLogin({ onLogin, loginError, onClearError }) {
                 className={styles.input}
                 type="text"
                 placeholder={t('auth', 'usernamePh')}
-                value={username}
-                autoComplete="username"
-                onChange={(e) => { setUsername(e.target.value); onClearError() }}
+                value={email}
+                autoComplete="email"
+                onChange={(e) => { setEmail(e.target.value); onClearError() }}
               />
             </div>
           </div>
