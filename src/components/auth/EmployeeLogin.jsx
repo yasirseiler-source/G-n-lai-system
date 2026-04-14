@@ -5,7 +5,7 @@ import styles from './EmployeeLogin.module.css'
 
 export default function EmployeeLogin({ onLogin, loginError, onClearError }) {
   const { t } = useTranslation()
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPw, setShowPw] = useState(false)
 
