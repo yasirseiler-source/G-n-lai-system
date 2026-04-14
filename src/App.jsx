@@ -26,6 +26,19 @@ function AppInner() {
   const activeVertical = verticals.find((v) => v.id === activeVerticalId) || null
   const state = useIntakeState(activeVertical)
 
+  useEffect(() => {
+    async function testSupabase() {
+      const { data, error } = await supabase
+        .from('users')
+        .select('*')
+
+      console.log('SUPABASE DATA:', data)
+      console.log('SUPABASE ERROR:', error)
+    }
+
+    testSupabase()
+  }, [])
+  
   const navigate = useCallback(
     (targetPage, verticalId) => {
       if (targetPage === 'landing')          { setPage('landing'); setActiveVerticalId(null); return }
