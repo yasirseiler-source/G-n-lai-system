@@ -1,3 +1,4 @@
+import { supabase } from './lib/supabase'
 import { useState, useCallback } from 'react'
 import { verticals } from './data/verticals'
 import { useIntakeState } from './hooks/useIntakeState'
