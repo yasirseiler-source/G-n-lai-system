@@ -23,8 +23,9 @@ export function useAuth() {
     setCurrentEmployee(data)
 
     return {
-      ok: true,
-      langPref: 'de' // optional später dynamisch
+  ok: true,
+  langPref: 'de',
+  role: data.role
     }
   }
 
