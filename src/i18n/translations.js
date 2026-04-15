@@ -48,8 +48,8 @@ export const translations = {
     auth: {
       loginTitle:     'Çalışan Girişi',
       loginSubtitle:  'Dahili alan — yalnızca yetkili çalışanlar için',
-      username:       'Kullanıcı Adı',
-      usernamePh:     'Kullanıcı adını girin',
+      username:       'E-posta',
+      usernamePh:     'E-posta girin',
       password:       'Şifre',
       passwordPh:     'Şifre girin',
       submit:         'Giriş Yap',
@@ -414,8 +414,8 @@ export const translations = {
     auth: {
       loginTitle:     'Mitarbeiter-Login',
       loginSubtitle:  'Interner Bereich — nur für autorisierte Mitarbeiter',
-      username:       'Benutzername',
-      usernamePh:     'Benutzername eingeben',
+      username:       'E-Mail',
+      usernamePh:     'E-Mail eingeben',
       password:       'Passwort',
       passwordPh:     'Passwort eingeben',
       submit:         'Anmelden',
@@ -742,8 +742,8 @@ export const translations = {
     auth: {
       loginTitle:     'Employee Login',
       loginSubtitle:  'Internal area — authorized employees only',
-      username:       'Username',
-      usernamePh:     'Enter username',
+      username:       'Email',
+      usernamePh:     'Enter email',
       password:       'Password',
       passwordPh:     'Enter password',
       submit:         'Sign In',
