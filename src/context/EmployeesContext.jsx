@@ -18,8 +18,35 @@ const EmployeesContext = createContext(null)
 
 export function EmployeesProvider({ children }) {
   // TODO (Backend): GET /api/employees → initiale Liste aus DB laden
-  const [employees, setEmployees] = useState(() =>
-    initialEmployees.map(e => ({ ...e }))
+  const [employees, setEmployees] = useState([])
+  useEffect(() => {
+  async function loadEmployees() {
+    const { data, error } = await supabase
+      .from('users')
+      .select('id, created_at, name, email, role, commission_type, commission_value, is_active, language_preference')
+
+    if (error) {
+      console.error('[EmployeesContext] GET /users failed', error)
+      return
+    }
+
+    const mapped = (data || []).map(user => ({
+      employeeId: user.id,
+      fullName: user.name,
+      username: user.email,
+      role: user.role,
+      isActive: user.is_active,
+      commissionType: user.commission_type,
+      commissionValue: Number(user.commission_value ?? 0),
+      languagePreference: user.language_preference ?? 'de',
+      createdAt: user.created_at,
+    }))
+
+    setEmployees(mapped)
+  }
+
+  loadEmployees()
+}, [])
   )
 
   /**
