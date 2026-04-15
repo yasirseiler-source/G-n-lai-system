@@ -1,53 +1,40 @@
 import { createContext, useContext, useState, useCallback, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 
-/**
- * EmployeesContext – Gemeinsamer Mitarbeiter-State für AdminPanel + useAuth
- *
- * ⚠️ SICHERHEITSHINWEIS:
- * - Daten leben nur im React-State (Reload = Reset auf Demo-Daten).
- * - Im Produktionsbetrieb:
- *   GET    /api/employees   → initiale Liste laden
- *   POST   /api/employees   → neuen Mitarbeiter anlegen
- *   PATCH  /api/employees/:id → Mitarbeiter aktualisieren
- * - Passwörter MÜSSEN serverseitig mit bcrypt/argon2 gehasht werden.
- * - Rollenprüfung MUSS serverseitig erfolgen.
- */
-
 const EmployeesContext = createContext(null)
 
 export function EmployeesProvider({ children }) {
-  // TODO (Backend): GET /api/employees → initiale Liste aus DB laden
   const [employees, setEmployees] = useState([])
-  useEffect(() => {
-  async function loadEmployees() {
-    const { data, error } = await supabase
-      .from('users')
-      .select('id, created_at, name, email, role, commission_type, commission_value, is_active, language_preference')
 
-    if (error) {
-      console.error('[EmployeesContext] GET /users failed', error)
-      return
+  useEffect(() => {
+    async function loadEmployees() {
+      const { data, error } = await supabase
+        .from('users')
+        .select('id, created_at, name, email, role, commission_type, commission_value, is_active, language_preference')
+
+      if (error) {
+        console.error('[EmployeesContext] GET /users failed', error)
+        return
+      }
+
+      const mapped = (data || []).map((user) => ({
+        employeeId: user.id,
+        fullName: user.name,
+        username: user.email,
+        role: user.role,
+        isActive: user.is_active,
+        commissionType: user.commission_type,
+        commissionValue: Number(user.commission_value ?? 0),
+        languagePreference: user.language_preference ?? 'de',
+        createdAt: user.created_at,
+      }))
+
+      setEmployees(mapped)
     }
 
-    const mapped = (data || []).map(user => ({
-      employeeId: user.id,
-      fullName: user.name,
-      username: user.email,
-      role: user.role,
-      isActive: user.is_active,
-      commissionType: user.commission_type,
-      commissionValue: Number(user.commission_value ?? 0),
-      languagePreference: user.language_preference ?? 'de',
-      createdAt: user.created_at,
-    }))
+    loadEmployees()
+  }, [])
 
-    setEmployees(mapped)
-  }
-
-  loadEmployees()
-}, [])
-  
   const addEmployee = useCallback((data) => {
     const newEmp = {
       ...data,
@@ -55,96 +42,90 @@ export function EmployeesProvider({ children }) {
       employeeId: `emp-${Date.now()}`,
       createdAt: new Date().toISOString(),
     }
+
     console.log('[EmployeesContext] POST /api/employees', {
       ...newEmp,
-      _demoPassword: '***', // Passwort nicht loggen
+      _demoPassword: '***',
     })
-    setEmployees(prev => [...prev, newEmp])
+
+    setEmployees((prev) => [...prev, newEmp])
     return newEmp
   }, [])
 
-  /**
-   * Mitarbeiter aktualisieren
-   * TODO (Backend): PATCH /api/employees/:id
-   * - Provision MUSS serverseitig aus DB gelesen werden
-   * - Passwort MUSS serverseitig gehasht gespeichert werden
-   */
   const updateEmployee = useCallback(async (id, data) => {
-  const updated = {
-    ...data,
-    commissionValue: Number(data.commissionValue),
-  }
+    const updated = {
+      ...data,
+      commissionValue: Number(data.commissionValue),
+    }
 
-  const dbPayload = {
-    name: updated.fullName,
-    email: updated.username,
-    role: updated.role,
-    is_active: updated.isActive,
-    commission_type: updated.commissionType,
-    commission_value: updated.commissionValue,
-    language_preference: updated.languagePreference,
-  }
+    const dbPayload = {
+      name: updated.fullName,
+      email: updated.username,
+      role: updated.role,
+      is_active: updated.isActive,
+      commission_type: updated.commissionType,
+      commission_value: updated.commissionValue,
+      language_preference: updated.languagePreference,
+    }
 
-  const { error } = await supabase
-    .from('users')
-    .update(dbPayload)
-    .eq('id', id)
+    const { error } = await supabase
+      .from('users')
+      .update(dbPayload)
+      .eq('id', id)
 
-  if (error) {
-    console.error('[EmployeesContext] PATCH /users failed', error)
-    return null
-  }
+    if (error) {
+      console.error('[EmployeesContext] PATCH /users failed', error)
+      return null
+    }
 
-  setEmployees(prev => prev.map(e =>
-    e.employeeId === id ? updated : e
-  ))
+    setEmployees((prev) =>
+      prev.map((e) => (e.employeeId === id ? updated : e))
+    )
 
-  return updated
-}, [])
+    return updated
+  }, [])
 
-  /**
-   * Aktivieren / Deaktivieren
-   * TODO (Backend): PATCH /api/employees/:id { isActive }
-   */
   const toggleActive = useCallback(async (id) => {
-  const emp = employees.find(e => e.employeeId === id)
-  if (!emp) return
+    const emp = employees.find((e) => e.employeeId === id)
+    if (!emp) return
 
-  const newStatus = !emp.isActive
+    const newStatus = !emp.isActive
 
-  const { error } = await supabase
-    .from('users')
-    .update({ is_active: newStatus })
-    .eq('id', id)
+    const { error } = await supabase
+      .from('users')
+      .update({ is_active: newStatus })
+      .eq('id', id)
 
-  if (error) {
-    console.error('[EmployeesContext] PATCH is_active failed', error)
-    return
-  }
+    if (error) {
+      console.error('[EmployeesContext] PATCH is_active failed', error)
+      return
+    }
 
-  setEmployees(prev => prev.map(e =>
-    e.employeeId === id ? { ...e, isActive: newStatus } : e
-  ))
-}, [employees])
+    setEmployees((prev) =>
+      prev.map((e) =>
+        e.employeeId === id ? { ...e, isActive: newStatus } : e
+      )
+    )
+  }, [employees])
 
-  /**
-   * Mitarbeiter per Login-Daten finden
-   * ⚠️ Nur Demo – Produktionsbetrieb: POST /api/auth/login → Token
-   */
   const findByCredentials = useCallback((username, password) => {
-    return employees.find(
-      e => e.username === username && e._demoPassword === password
-    ) || null
+    return (
+      employees.find(
+        (e) => e.username === username && e._demoPassword === password
+      ) || null
+    )
   }, [employees])
 
   return (
-    <EmployeesContext.Provider value={{
-      employees,
-      addEmployee,
-      updateEmployee,
-      toggleActive,
-      findByCredentials,
-    }}>
+    <EmployeesContext.Provider
+      value={{
+        employees,
+        addEmployee,
+        updateEmployee,
+        toggleActive,
+        findByCredentials,
+      }}
+    >
       {children}
     </EmployeesContext.Provider>
   )
