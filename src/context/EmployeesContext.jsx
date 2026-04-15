@@ -74,20 +74,38 @@ export function EmployeesProvider({ children }) {
    * - Provision MUSS serverseitig aus DB gelesen werden
    * - Passwort MUSS serverseitig gehasht gespeichert werden
    */
-  const updateEmployee = useCallback((id, data) => {
-    const updated = {
-      ...data,
-      commissionValue: Number(data.commissionValue),
-    }
-    console.log('[EmployeesContext] PATCH /api/employees/' + id, {
-      ...updated,
-      _demoPassword: updated._demoPassword ? '***' : undefined,
-    })
-    setEmployees(prev => prev.map(e =>
-      e.employeeId === id ? updated : e
-    ))
-    return updated
-  }, [])
+  const updateEmployee = useCallback(async (id, data) => {
+  const updated = {
+    ...data,
+    commissionValue: Number(data.commissionValue),
+  }
+
+  const dbPayload = {
+    name: updated.fullName,
+    email: updated.username,
+    role: updated.role,
+    is_active: updated.isActive,
+    commission_type: updated.commissionType,
+    commission_value: updated.commissionValue,
+    language_preference: updated.languagePreference,
+  }
+
+  const { error } = await supabase
+    .from('users')
+    .update(dbPayload)
+    .eq('id', id)
+
+  if (error) {
+    console.error('[EmployeesContext] PATCH /users failed', error)
+    return null
+  }
+
+  setEmployees(prev => prev.map(e =>
+    e.employeeId === id ? updated : e
+  ))
+
+  return updated
+}, [])
 
   /**
    * Aktivieren / Deaktivieren
