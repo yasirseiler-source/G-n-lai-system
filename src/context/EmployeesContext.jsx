@@ -93,11 +93,26 @@ export function EmployeesProvider({ children }) {
    * Aktivieren / Deaktivieren
    * TODO (Backend): PATCH /api/employees/:id { isActive }
    */
-  const toggleActive = useCallback((id) => {
-    setEmployees(prev => prev.map(e =>
-      e.employeeId === id ? { ...e, isActive: !e.isActive } : e
-    ))
-  }, [])
+  const toggleActive = useCallback(async (id) => {
+  const emp = employees.find(e => e.employeeId === id)
+  if (!emp) return
+
+  const newStatus = !emp.isActive
+
+  const { error } = await supabase
+    .from('users')
+    .update({ is_active: newStatus })
+    .eq('id', id)
+
+  if (error) {
+    console.error('[EmployeesContext] PATCH is_active failed', error)
+    return
+  }
+
+  setEmployees(prev => prev.map(e =>
+    e.employeeId === id ? { ...e, isActive: newStatus } : e
+  ))
+}, [employees])
 
   /**
    * Mitarbeiter per Login-Daten finden
