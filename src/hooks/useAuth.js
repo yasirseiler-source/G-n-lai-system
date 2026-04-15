@@ -20,13 +20,25 @@ export function useAuth() {
       return { ok: false }
     }
 
-    setCurrentEmployee(data)
+    const mappedUser = {
+  employeeId: data.id,
+  fullName: data.name,
+  username: data.email,
+  role: data.role,
+  isActive: data.is_active,
+  commissionType: data.commission_type,
+  commissionValue: Number(data.commission_value ?? 0),
+  languagePreference: data.language_preference ?? 'de',
+  createdAt: data.created_at,
+}
 
-    return {
+setCurrentEmployee(mappedUser)
+
+return {
   ok: true,
-  langPref: 'de',
-  role: data.role
-    }
+  langPref: mappedUser.languagePreference,
+  role: mappedUser.role,
+}
   }
 
   function logout() {
