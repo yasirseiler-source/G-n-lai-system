@@ -47,12 +47,7 @@ export function EmployeesProvider({ children }) {
 
   loadEmployees()
 }, [])
-  )
-
-  /**
-   * Mitarbeiter hinzufügen
-   * TODO (Backend): POST /api/employees → gibt neue employeeId + createdAt zurück
-   */
+  
   const addEmployee = useCallback((data) => {
     const newEmp = {
       ...data,
