@@ -13,9 +13,8 @@ export default function EmployeeLogin({ onLogin, loginError, onClearError }) {
     e.preventDefault()
     if (!email.trim() || !password.trim()) return
     onLogin(email.trim(), password)
-    
   }
-  
+
   const errorMsg = loginError ? t('auth', loginError) : ''
 
   return (
@@ -30,11 +29,6 @@ export default function EmployeeLogin({ onLogin, loginError, onClearError }) {
           <p className={styles.subtitle}>{t('auth', 'loginSubtitle')}</p>
         </div>
 
-        <div className={styles.secNote}>
-          <Icon name="info" size={12} color="var(--text-muted)" />
-          <span>{t('auth', 'demoNote')}</span>
-        </div>
-
         <form className={styles.form} onSubmit={handleSubmit} noValidate>
           <div className={styles.field}>
             <label className={styles.label}>{t('auth', 'username')}</label>
@@ -42,7 +36,7 @@ export default function EmployeeLogin({ onLogin, loginError, onClearError }) {
               <Icon name="briefcase" size={14} color="var(--text-muted)" />
               <input
                 className={styles.input}
-                type="text"
+                type="email"
                 placeholder={t('auth', 'usernamePh')}
                 value={email}
                 autoComplete="email"
@@ -79,17 +73,12 @@ export default function EmployeeLogin({ onLogin, loginError, onClearError }) {
           <button
             type="submit"
             className={styles.submitBtn}
-            disabled={!username.trim() || !password.trim()}
+            disabled={!email.trim() || !password.trim()}
           >
             {t('auth', 'submit')}
             <Icon name="arrowRight" size={14} color="#fff" />
           </button>
         </form>
-
-        <div className={styles.demoHint}>
-          <strong>{t('auth', 'demoHint')}</strong>{' '}
-          anna / demo123 &nbsp;·&nbsp; kemal / demo456 &nbsp;·&nbsp; sophie / demo789
-        </div>
       </div>
     </div>
   )

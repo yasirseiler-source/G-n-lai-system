@@ -103,6 +103,12 @@ export default function Icon({ name, size = 16, color = 'currentColor', style })
     clock: (
       <svg viewBox="0 0 24 24" style={s}><circle {...p} cx="12" cy="12" r="10"/><polyline {...p} points="12 6 12 12 16 14"/></svg>
     ),
+    grid: (
+      <svg viewBox="0 0 24 24" style={s}><rect {...p} x="3" y="3" width="7" height="7"/><rect {...p} x="14" y="3" width="7" height="7"/><rect {...p} x="3" y="14" width="7" height="7"/><rect {...p} x="14" y="14" width="7" height="7"/></svg>
+    ),
+    tag: (
+      <svg viewBox="0 0 24 24" style={s}><path {...p} d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line {...p} x1="7" y1="7" x2="7.01" y2="7"/></svg>
+    ),
     list: (
       <svg viewBox="0 0 24 24" style={s}><line {...p} x1="8" y1="6" x2="21" y2="6"/><line {...p} x1="8" y1="12" x2="21" y2="12"/><line {...p} x1="8" y1="18" x2="21" y2="18"/><line {...p} x1="3" y1="6" x2="3.01" y2="6"/><line {...p} x1="3" y1="12" x2="3.01" y2="12"/><line {...p} x1="3" y1="18" x2="3.01" y2="18"/></svg>
     ),

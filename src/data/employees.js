@@ -1,20 +1,10 @@
 /**
- * Mitarbeiter-Datenstruktur – Demo-Daten
+ * LEGACY / REFERENZ – Diese Datei wird im aktiven Code NICHT importiert.
  *
- * ⚠️ SICHERHEITSHINWEIS:
- * - Diese Datei enthält NUR Demo-Daten für Frontend-Entwicklung.
- * - Im Produktionsbetrieb: Mitarbeiterdaten aus gesicherter Datenbank laden.
- * - Passwörter NIEMALS im Frontend speichern (auch nicht gehasht).
- * - Authentifizierung MUSS serverseitig über API erfolgen (JWT / Session).
- * - Provisionen MÜSSEN serverseitig aus DB gelesen und validiert werden.
+ * Mitarbeiterdaten werden aus der Supabase `users`-Tabelle geladen
+ * (siehe src/context/EmployeesContext.jsx und src/hooks/useAuth.js).
  *
- * API-Endpunkte (vorzubereiten):
- *   GET    /api/employees          – Liste aller Mitarbeiter (Admin)
- *   POST   /api/employees          – Mitarbeiter anlegen
- *   PATCH  /api/employees/:id      – Mitarbeiter aktualisieren (Provision, Status, etc.)
- *   DELETE /api/employees/:id      – Mitarbeiter deaktivieren
- *   POST   /api/auth/login         – Login → gibt Token zurück
- *   POST   /api/auth/logout        – Session beenden
+ * Diese Demo-Daten dienen nur noch als Referenz fuer die Datenstruktur.
  */
 
 export const employees = [

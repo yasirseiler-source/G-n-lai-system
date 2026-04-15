@@ -6,16 +6,11 @@ import styles from './AdminPanel.module.css'
 
 /**
  * Admin-Panel – Mitarbeiterverwaltung
+ * Alle CRUD-Operationen laufen ueber Supabase (EmployeesContext).
  *
- * ⚠️ SICHERHEITSHINWEIS:
- * - Alle Änderungen gehen über EmployeesContext (React-State).
- * - Bei Reload werden Änderungen zurückgesetzt (Demo-Modus).
- * - Im Produktionsbetrieb:
- *   GET    /api/employees          → initiale Liste
- *   POST   /api/employees          → neuen Mitarbeiter anlegen
- *   PATCH  /api/employees/:id      → Mitarbeiter aktualisieren
- * - Passwörter MÜSSEN serverseitig mit bcrypt/argon2 gespeichert werden.
- * - Zugriff NUR nach serverseitiger Rollenprüfung erlauben.
+ * SICHERHEITSHINWEIS (Produktion):
+ * - Passwoerter sollten serverseitig gehasht werden (bcrypt/argon2).
+ * - Zugriff nur nach serverseitiger Rollenpruefung (RLS-Policies).
  */
 
 const ROLES = ['admin', 'sales', 'support']
@@ -23,7 +18,7 @@ const LANGS = ['tr', 'de', 'en']
 
 function emptyForm() {
   return {
-    fullName: '', username: '', _demoPassword: '',
+    fullName: '', email: '', password: '',
     role: 'sales', isActive: true,
     commissionType: 'percent', commissionValue: 5,
     languagePreference: 'tr',
@@ -33,8 +28,8 @@ function emptyForm() {
 function validate(data, isEdit = false) {
   const errors = {}
   if (!data.fullName?.trim())    errors.fullName = true
-  if (!data.username?.trim())    errors.username = true
-  if (!isEdit && !data._demoPassword?.trim()) errors._demoPassword = true
+  if (!data.email?.trim())       errors.email = true
+  if (!isEdit && !data.password?.trim()) errors.password = true
   if (
     data.commissionValue === '' ||
     isNaN(Number(data.commissionValue)) ||
@@ -50,16 +45,15 @@ export default function AdminPanel({ onBack, onEmployeeUpdated }) {
   // panel: null | { mode: 'add' | 'edit', data: {...} }
   const [panel, setPanel]   = useState(null)
   const [errors, setErrors] = useState({})
-  const [saved, setSaved]   = useState(null) // employeeId nach Speichern → grüner Rahmen
+  const [saved, setSaved]   = useState(null)
 
-  // ── Panel öffnen / schließen ──
   function openAdd() {
     setPanel({ mode: 'add', data: emptyForm() })
     setErrors({})
   }
 
   function openEdit(emp) {
-    setPanel({ mode: 'edit', data: { ...emp, _demoPassword: emp._demoPassword || '' } })
+    setPanel({ mode: 'edit', data: { ...emp, password: '' } })
     setErrors({})
   }
 
@@ -70,36 +64,27 @@ export default function AdminPanel({ onBack, onEmployeeUpdated }) {
     if (errors[key]) setErrors(e => ({ ...e, [key]: false }))
   }
 
-  // ── Speichern ──
-  function handleSave() {
+  async function handleSave() {
     const isEdit = panel.mode === 'edit'
     const errs   = validate(panel.data, isEdit)
     if (Object.keys(errs).length) { setErrors(errs); return }
 
     if (isEdit) {
-      // Passwort beibehalten wenn Feld leer
-      const existing    = employees.find(e => e.employeeId === panel.data.employeeId)
-      const passwordVal = panel.data._demoPassword?.trim()
-        ? panel.data._demoPassword
-        : existing?._demoPassword || ''
-
-      const updated = updateEmployee(panel.data.employeeId, {
+      const updated = await updateEmployee(panel.data.employeeId, {
         ...panel.data,
-        _demoPassword: passwordVal,
+        password: panel.data.password?.trim() || null,
       })
-      // Eingeloggter Admin soll seinen eigenen State sofort aktualisiert sehen
       onEmployeeUpdated?.(updated)
-      setSaved(updated.employeeId)
+      setSaved(updated?.employeeId)
     } else {
-      const newEmp = addEmployee(panel.data)
-      setSaved(newEmp.employeeId)
+      const newEmp = await addEmployee(panel.data)
+      setSaved(newEmp?.employeeId)
     }
 
     setTimeout(() => setSaved(null), 2500)
     closePanel()
   }
 
-  // ── Stats ──
   const totalCount  = employees.length
   const activeCount = employees.filter(e => e.isActive).length
   const adminCount  = employees.filter(e => e.role === 'admin').length
@@ -108,7 +93,7 @@ export default function AdminPanel({ onBack, onEmployeeUpdated }) {
     <div className={styles.page}>
       <div className={styles.container}>
 
-        {/* ── Header ── */}
+        {/* Header */}
         <div className={styles.pageHeader}>
           <button className={styles.backLink} onClick={onBack}>
             <Icon name="chevronRight" size={13} color="var(--primary)" style={{ transform: 'rotate(180deg)' }} />
@@ -124,21 +109,20 @@ export default function AdminPanel({ onBack, onEmployeeUpdated }) {
           </button>
         </div>
 
-        {/* ── Stats-Leiste (live aus Context) ── */}
+        {/* Stats */}
         <div className={styles.statsBar}>
           <StatItem label={t('admin', 'statTotal')}  value={totalCount}  color="var(--primary)" />
           <StatItem label={t('admin', 'statActive')} value={activeCount} color="var(--status-green)" />
           <StatItem label={t('admin', 'statAdmins')} value={adminCount}  color="var(--status-red)" />
         </div>
 
-        {/* ── API-Hinweis ── */}
+        {/* Info */}
         <div className={styles.secNote}>
           <Icon name="info" size={12} color="var(--text-muted)" />
           <span>{t('admin', 'secNote')}</span>
-          <code>POST /api/employees · PATCH /api/employees/:id</code>
         </div>
 
-        {/* ── Mitarbeiterliste ── */}
+        {/* Mitarbeiterliste */}
         {employees.length === 0 ? (
           <div className={styles.empty}>{t('admin', 'noEmployees')}</div>
         ) : (
@@ -171,7 +155,7 @@ export default function AdminPanel({ onBack, onEmployeeUpdated }) {
                         <span className={styles.empIdBadge}>{emp.employeeId}</span>
                       </div>
                     </td>
-                    <td><code className={styles.code}>{emp.username}</code></td>
+                    <td><code className={styles.code}>{emp.email}</code></td>
                     <td><RoleBadge role={emp.role} t={t} /></td>
                     <td>
                       <span className={`${styles.statusBadge} ${emp.isActive ? styles.statusActive : styles.statusInactive}`}>
@@ -210,7 +194,7 @@ export default function AdminPanel({ onBack, onEmployeeUpdated }) {
         )}
       </div>
 
-      {/* ── Side-Panel: Anlegen / Bearbeiten ── */}
+      {/* Side-Panel: Anlegen / Bearbeiten */}
       {panel && (
         <>
           <div className={styles.overlay} onClick={closePanel} />
@@ -220,7 +204,7 @@ export default function AdminPanel({ onBack, onEmployeeUpdated }) {
               <span className={styles.sidePanelTitle}>
                 {panel.mode === 'add' ? t('admin', 'addEmployee') : t('admin', 'editEmployee')}
               </span>
-              <button className={styles.closeBtn} onClick={closePanel} aria-label="Schließen">
+              <button className={styles.closeBtn} onClick={closePanel} aria-label="Schliessen">
                 <Icon name="x" size={14} color="var(--text-muted)" />
               </button>
             </div>
@@ -236,28 +220,27 @@ export default function AdminPanel({ onBack, onEmployeeUpdated }) {
                 />
               </FormField>
 
-              <FormField label={t('admin', 'username')} error={errors.username}>
+              <FormField label={t('admin', 'username')} error={errors.email}>
                 <input
-                  className={`${styles.input} ${errors.username ? styles.inputError : ''}`}
-                  value={panel.data.username}
-                  onChange={e => setField('username', e.target.value)}
-                  placeholder="max.muster"
+                  className={`${styles.input} ${errors.email ? styles.inputError : ''}`}
+                  value={panel.data.email}
+                  onChange={e => setField('email', e.target.value)}
+                  placeholder="name@firma.de"
                   autoComplete="off"
+                  type="email"
                 />
               </FormField>
 
               <FormField
                 label={panel.mode === 'edit' ? t('admin', 'newPassword') : t('admin', 'password')}
-                error={errors._demoPassword}
-                note={panel.mode === 'edit'
-                  ? t('admin', 'passwordEditNote')
-                  : t('admin', 'passwordNote')}
+                error={errors.password}
+                note={t('admin', 'passwordNote')}
               >
                 <input
-                  className={`${styles.input} ${errors._demoPassword ? styles.inputError : ''}`}
+                  className={`${styles.input} ${errors.password ? styles.inputError : ''}`}
                   type="password"
-                  value={panel.data._demoPassword}
-                  onChange={e => setField('_demoPassword', e.target.value)}
+                  value={panel.data.password}
+                  onChange={e => setField('password', e.target.value)}
                   placeholder={panel.mode === 'edit' ? t('admin', 'passwordEditPlaceholder') : ''}
                   autoComplete="new-password"
                 />
@@ -277,7 +260,7 @@ export default function AdminPanel({ onBack, onEmployeeUpdated }) {
                 </select>
               </FormField>
 
-              {/* Provision – nur hier festlegbar */}
+              {/* Provision */}
               <div className={styles.commSection}>
                 <div className={styles.commSectionTitle}>
                   <Icon name="tag" size={12} color="var(--primary)" />
@@ -357,7 +340,7 @@ export default function AdminPanel({ onBack, onEmployeeUpdated }) {
   )
 }
 
-// ── Sub-Komponenten ──
+// Sub-Komponenten
 function StatItem({ label, value, color }) {
   return (
     <div className={styles.statItem}>
