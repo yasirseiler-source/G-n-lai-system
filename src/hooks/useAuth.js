@@ -15,7 +15,7 @@ export function useAuth() {
       .eq('password', password)
       .maybeSingle()
 
-    if (error || !data) {
+    if (!data) {
       setLoginError('Login fehlgeschlagen')
       return { ok: false }
     }
