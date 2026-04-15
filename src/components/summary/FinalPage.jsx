@@ -41,7 +41,7 @@ function SizeBar({ systemSize, sizeMap }) {
   )
 }
 
-export default function FinalPage({ state, vertical, onBack }) {
+export default function FinalPage({ state, vertical, onBack, currentEmployee }) {
   const { t, lang } = useTranslation()
   const { selectedModules, selectedSensors, systemSize, cameraCount, technicalHints, formData, effectiveSensorQty, totalModules } = state
 
@@ -75,11 +75,10 @@ export default function FinalPage({ state, vertical, onBack }) {
 
   async function handleSend() {
     setSending(true)
-    // source = 'public' → kein Mitarbeiter, keine Provision
     const result = await submitLead({
-      source: 'public',
+      source: currentEmployee ? 'employee' : 'public',
       formData,
-      employee: null,
+      employee: currentEmployee || null,
       lang,
       extra: { vertical: vertical?.id, selectedModules: modules, selectedSensors: sensors, effectiveSensorQty, systemSize, cameraCount, technicalHints },
     })

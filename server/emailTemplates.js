@@ -106,6 +106,8 @@ export function buildEmailContent(lead) {
     <table>
       <tr><td>Mitarbeiter-ID</td><td>${lead.employeeId ?? '<span class="null-value">— (public)</span>'}</td></tr>
       <tr><td>Mitarbeitername</td><td>${lead.employeeName ?? '<span class="null-value">— (public)</span>'}</td></tr>
+      <tr><td>Mitarbeiter-E-Mail</td><td>${lead.employeeEmail ? `<a href="mailto:${lead.employeeEmail}" style="color:#1B5FA6">${lead.employeeEmail}</a>` : '<span class="null-value">— (public)</span>'}</td></tr>
+      <tr><td>Rolle</td><td>${lead.employeeRole ?? '<span class="null-value">—</span>'}</td></tr>
       <tr><td>Provisionsart</td><td>${lead.commissionType ?? '<span class="null-value">keine</span>'}</td></tr>
       <tr><td>Provision</td><td class="field-value commission">${
         lead.commissionType === 'percent' ? `${lead.commissionValue}%`
@@ -113,9 +115,9 @@ export function buildEmailContent(lead) {
         : '<span class="null-value">0 (public)</span>'
       }</td></tr>
     </table>
-    <div class="warn">
-      ⚠️ Produktionsbetrieb: Provisionswerte und Mitarbeiterzuordnung müssen serverseitig aus der Datenbank validiert werden. Dieser Wert stammt aus dem Frontend-Payload.
-    </div>
+    ${lead.source === 'public' ? `<div class="warn">
+      Öffentliche Anfrage — kein Mitarbeiter zugeordnet.
+    </div>` : ''}
   </div>
 
   <!-- Technische Details (falls vorhanden) -->
@@ -163,6 +165,8 @@ MITARBEITER
 -----------
 ID:           ${lead.employeeId ?? '—'}
 Name:         ${lead.employeeName ?? '—'}
+E-Mail:       ${lead.employeeEmail ?? '—'}
+Rolle:        ${lead.employeeRole ?? '—'}
 Provision:    ${lead.commissionType === 'percent' ? `${lead.commissionValue}%` : lead.commissionType === 'fixed' ? `${lead.commissionValue}€` : '0 (public)'}
 
 ⚠️ Provisionen müssen serverseitig validiert werden.
