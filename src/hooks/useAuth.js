@@ -13,7 +13,7 @@ export function useAuth() {
       .select('*')
       .eq('email', email)
       .eq('password', password)
-      .single()
+      .maybeSingle()
 
     if (error || !data) {
       setLoginError('Login fehlgeschlagen')
