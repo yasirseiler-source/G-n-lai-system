@@ -1,5 +1,5 @@
-import { createContext, useContext, useState, useCallback } from 'react'
-import { employees as initialEmployees } from '../data/employees'
+import { createContext, useContext, useState, useCallback, useEffect } from 'react'
+import { supabase } from '../lib/supabase'
 
 /**
  * EmployeesContext – Gemeinsamer Mitarbeiter-State für AdminPanel + useAuth
