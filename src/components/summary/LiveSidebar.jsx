@@ -10,10 +10,10 @@ export default function LiveSidebar({
   const { t } = useTranslation()
 
   const sizeConfig = {
-    S:  { label: t('sidebar', 'sizeSmall'),  color: 'var(--status-green)',  bg: 'var(--status-green-bg)',  pct: 25 },
-    M:  { label: t('sidebar', 'sizeMedium'), color: 'var(--primary)',        bg: 'var(--primary-lighter)',  pct: 50 },
-    L:  { label: t('sidebar', 'sizeLarge'),  color: 'var(--status-yellow)', bg: 'var(--status-yellow-bg)', pct: 75 },
-    XL: { label: t('sidebar', 'sizeXL'),     color: 'var(--status-red)',    bg: 'var(--status-red-bg)',    pct: 100 },
+    S:  { label: t('sidebar', 'sizeSmall'),  color: 'var(--status-green)',  pct: 25 },
+    M:  { label: t('sidebar', 'sizeMedium'), color: 'var(--ctx-accent, var(--primary))', pct: 50 },
+    L:  { label: t('sidebar', 'sizeLarge'),  color: 'var(--status-yellow)', pct: 75 },
+    XL: { label: t('builder', 'sizeXL'),     color: 'var(--status-red)',    pct: 100 },
   }
 
   const needsKeys = [
@@ -23,7 +23,6 @@ export default function LiveSidebar({
     { key: 'notfallmanagement',    label: t('needs', 'emergency') },
   ]
 
-  // levelOptions müssen der Sprache entsprechen
   const levelOptions = [
     t('form', 'needsNone'),
     t('form', 'needsLow'),
@@ -31,7 +30,7 @@ export default function LiveSidebar({
     t('form', 'needsHigh'),
     t('form', 'needsVeryHigh'),
   ]
-  const barColors = ['var(--border)', 'var(--status-green)', '#E8A020', '#D4640A', 'var(--status-red)']
+  const barColors = ['var(--card-border)', 'var(--status-green)', '#E8A020', '#D4640A', 'var(--status-red)']
 
   const size = sizeConfig[systemSize] || sizeConfig.S
   const modules = Array.from(selectedModules)
@@ -47,14 +46,18 @@ export default function LiveSidebar({
 
   return (
     <div className={styles.sidebar}>
+      {/* Header */}
       <div className={styles.header}>
-        <Icon name="activity" size={14} color="rgba(255,255,255,0.8)" />
-        <span className={styles.headerTitle}>{t('sidebar', 'title')}</span>
-        <div className={styles.liveIndicator} />
+        <div className={styles.headerTop}>
+          <Icon name="activity" size={14} color="var(--ctx-accent, var(--primary))" />
+          <span className={styles.headerTitle}>{t('builder', 'sidebarTitle')}</span>
+          <div className={styles.liveIndicator} />
+        </div>
+        <p className={styles.headerHelper}>{t('builder', 'sidebarHelper')}</p>
       </div>
 
-      {/* Systemgröße – berechnet aus Raumanzahl, Mitarbeitern und Modulanzahl */}
-      <div className={styles.sizeBlock} style={{ borderLeftColor: size.color }}>
+      {/* System size */}
+      <div className={styles.sizeBlock}>
         <div className={styles.sizeLabel}>{t('sidebar', 'systemSize')}</div>
         <div className={styles.sizeRow}>
           <span className={styles.sizeLetter} style={{ color: size.color }}>{systemSize}</span>
@@ -65,25 +68,25 @@ export default function LiveSidebar({
         </div>
       </div>
 
+      {/* Stats */}
       <div className={styles.statsRow}>
         {[
-          { icon: 'layers', value: moduleCount, label: t('sidebar', 'modules'), color: 'var(--primary)' },
-          { icon: 'radio',  value: sensorCount, label: t('sidebar', 'sensors'), color: 'var(--primary)' },
-          { icon: 'camera', value: cameraCount, label: t('sidebar', 'cameras'), color: 'var(--primary)' },
-        ].map(({ icon, value, label, color }) => (
+          { icon: 'layers', value: moduleCount, label: t('sidebar', 'modules') },
+          { icon: 'radio',  value: sensorCount, label: t('sidebar', 'sensors') },
+          { icon: 'camera', value: cameraCount, label: t('sidebar', 'cameras') },
+        ].map(({ icon, value, label }) => (
           <div key={label} className={styles.stat}>
-            <Icon name={icon} size={13} color={color} />
-            <span className={styles.statNum} style={{ color }}>{value}</span>
+            <Icon name={icon} size={13} color="var(--ctx-accent, var(--primary))" />
+            <span className={styles.statNum}>{value}</span>
             <span className={styles.statLabel}>{label}</span>
           </div>
         ))}
       </div>
 
+      {/* Modules */}
       <div className={styles.section}>
         <div className={styles.sectionRow}>
-          <span className={styles.sectionLabel}>
-            <Icon name="layers" size={12} color="var(--text-muted)" /> {t('sidebar', 'modules')}
-          </span>
+          <span className={styles.sectionLabel}>{t('sidebar', 'modules')}</span>
           <span className={styles.sectionMeta}>{moduleCount} / {totalModules} ({modulePct}%)</span>
         </div>
         <div className={styles.progressTrack}>
@@ -92,7 +95,7 @@ export default function LiveSidebar({
         <div className={styles.listCompact}>
           {modules.slice(0, 5).map((m) => (
             <div key={m} className={styles.listRow}>
-              <Icon name="check" size={10} color="var(--primary)" />
+              <Icon name="check" size={10} color="var(--ctx-accent, var(--primary))" />
               <span>{m}</span>
             </div>
           ))}
@@ -100,13 +103,10 @@ export default function LiveSidebar({
         </div>
       </div>
 
+      {/* Sensors */}
       <div className={styles.section}>
-        <div className={styles.sectionRow}>
-          <span className={styles.sectionLabel}>
-            <Icon name="radio" size={12} color="var(--text-muted)" /> {t('sidebar', 'sensors')}
-          </span>
-        </div>
-        <div className={styles.sensorTable}>
+        <div className={styles.sectionLabel}>{t('sidebar', 'sensors')}</div>
+        <div className={styles.sensorList}>
           {sensors.length === 0 && <div className={styles.empty}>{t('sidebar', 'noSensors')}</div>}
           {sensors.map((s) => (
             <div key={s} className={styles.sensorRow}>
@@ -120,9 +120,10 @@ export default function LiveSidebar({
         </div>
       </div>
 
+      {/* Needs */}
       {needsBars.length > 0 && (
         <div className={styles.section}>
-          <div className={styles.sectionLabel}><Icon name="target" size={12} color="var(--text-muted)" /> {t('sidebar', 'needs')}</div>
+          <div className={styles.sectionLabel}>{t('sidebar', 'needs')}</div>
           <div className={styles.needsBars}>
             {needsBars.map(b => (
               <div key={b.label} className={styles.needsRow}>
@@ -134,10 +135,11 @@ export default function LiveSidebar({
         </div>
       )}
 
+      {/* Customer info */}
       {formData.firmenname && (
         <div className={styles.customerBlock}>
           <div className={styles.customerRow}>
-            <Icon name="briefcase" size={12} color="var(--primary)" />
+            <Icon name="briefcase" size={12} color="var(--ctx-accent, var(--primary))" />
             <span className={styles.customerName}>{formData.firmenname}</span>
           </div>
           {formData.standort && (
@@ -146,20 +148,16 @@ export default function LiveSidebar({
               <span className={styles.customerSub}>{formData.standort}</span>
             </div>
           )}
-          {formData.budgetrahmen && (
-            <div className={styles.customerRow}>
-              <Icon name="dollar" size={12} color="var(--text-muted)" />
-              <span className={styles.customerSub}>{formData.budgetrahmen}</span>
-            </div>
-          )}
         </div>
       )}
 
+      {/* CTA */}
       <div className={styles.ctaBlock}>
         <button className={styles.cta} onClick={onNavigateFinal}>
-          {t('sidebar', 'goToSummary')}
+          {t('builder', 'cta')}
           <Icon name="arrowRight" size={14} color="#fff" />
         </button>
+        <p className={styles.ctaHelper}>{t('builder', 'ctaHelper')}</p>
       </div>
     </div>
   )
