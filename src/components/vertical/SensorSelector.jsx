@@ -8,17 +8,24 @@ export default function SensorSelector({ vertical, sensors, onChange, rooms = 1 
 
   const getSensorTranslation = (sensorName, type = 'name') => {
     const keyMap = {
-      'Kamera (davranış)': 'kameraDavranis',
-      'Ses analizi': 'sesAnalizi',
-      'Hareket sensörü': 'hareketSensoru',
-      'Kapı sensörü': 'kapiSensoru',
-      'Kamera (güvenlik)': 'kameraGuvenlik',
-      'Alarm sensörü': 'alarmSensoru',
-      'Erişim kontrolü': 'erisimKontrolu',
-      'Acil durum butonu': 'acilDurumButonu',
-      'Alan doluluk sensörü': 'alanDolulukSensoru',
-      'Ortam iklim sensörü': 'ortamIklimSensoru',
-      'Giriş alanı kamerası': 'girisAlaniKamerasi',
+      'Acil Cagri Butonu': 'acilCagriButonu',
+      'Hareket Sensoru': 'hareketSensoru',
+      'Kapi Sensoru': 'kapiSensoru',
+      'Ortam Iklim Sensoru': 'ortamIklimSensoru',
+      'Yatak / Aktivite Sensoru': 'yatakAktiviteSensoru',
+      'Erisim Kontrolu': 'erisimKontrolu',
+      'Ortak Alan Kamerasi': 'ortakAlanKamerasi',
+      'Sicaklik Sensoru': 'sicaklikSensoru',
+      'Titresim Sensoru': 'titresimSensoru',
+      'Guc Olcumu': 'gucOlcumu',
+      'Calisma Suresi Sayaci': 'calismaSuresiSayaci',
+      'RFID / Malzeme Takibi': 'rfidMalzemeTakibi',
+      'Uretim Alani Kamerasi': 'uretimAlaniKamerasi',
+      'Oda Doluluk Sensoru': 'odaDolulukSensoru',
+      'Iklim Sensoru': 'iklimSensoru',
+      'Enerji Tuketimi': 'enerjiTuketimi',
+      'Cihaz Durumu': 'cihazDurumu',
+      'Giris Alani Kamerasi': 'girisAlaniKamerasi',
     }
     
     const key = keyMap[sensorName]
