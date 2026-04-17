@@ -79,7 +79,7 @@ function AppInner() {
         <VerticalPage vertical={activeVertical} state={enrichedState} onNavigateFinal={() => navigate('final')} />
       )}
       {page === 'final' && (
-        <FinalPage state={enrichedState} vertical={activeVertical} onBack={() => navigate('landing')} currentEmployee={currentEmployee} />
+        <FinalPage state={enrichedState} vertical={activeVertical} onBack={() => navigate('landing')} />
       )}
 
       {/* ── Mitarbeiter-Login ── */}

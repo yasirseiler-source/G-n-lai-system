@@ -15,14 +15,7 @@ export default function VerticalPage({ vertical, state, onNavigateFinal }) {
   } = state
 
   return (
-    <div
-      className={styles.page}
-      style={{
-        '--ctx-accent': vertical.accentColor,
-        '--ctx-accent-light': vertical.accentLight,
-        '--ctx-accent-border': vertical.accentBorder,
-      }}
-    >
+    <div className={styles.page}>
       <div className={styles.main}>
         <HeroSection vertical={vertical} />
         <KPICards kpiDefs={vertical.kpis} kpis={kpis} onUpdate={updateKpi} />
@@ -40,7 +33,6 @@ export default function VerticalPage({ vertical, state, onNavigateFinal }) {
           sensorQuantities={sensorQuantities}
           onQtyChange={updateSensorQty}
           effectiveSensorQty={effectiveSensorQty}
-          vertical={vertical}
         />
         <CustomerForm formData={formData} onUpdate={updateForm} vertical={vertical} />
       </div>

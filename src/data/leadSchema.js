@@ -28,8 +28,6 @@ export function createLead({ source, formData, employee = null }) {
     // Mitarbeiter-Zuordnung (null wenn source = 'public')
     employeeId:      employee?.employeeId     ?? null,
     employeeName:    employee?.fullName        ?? null,
-    employeeEmail:   employee?.email           ?? null,
-    employeeRole:    employee?.role            ?? null,
 
     // Provision – wird beim Absenden fest gespeichert
     // ⚠️ Produktionsbetrieb: Wert aus DB lesen, nicht aus Frontend übernehmen

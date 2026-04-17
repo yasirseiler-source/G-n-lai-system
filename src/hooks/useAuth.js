@@ -14,11 +14,10 @@ export function useAuth() {
 
   async function login(email, password) {
     setLoginError('')
-    console.log('[useAuth] Login-Versuch:', email)
 
     if (!supabase) {
       setLoginError('errorCreds')
-      console.error('[useAuth] Supabase ist null - nicht konfiguriert')
+      console.error('[useAuth] Supabase nicht konfiguriert')
       return { ok: false }
     }
 
@@ -28,8 +27,6 @@ export function useAuth() {
       .eq('email', email)
       .eq('password', password)
       .maybeSingle()
-
-    console.log('[useAuth] Query Result - data:', data, 'error:', error)
 
     if (error) {
       console.error('[useAuth] Login-Abfrage fehlgeschlagen:', error)

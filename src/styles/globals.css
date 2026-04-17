@@ -11,7 +11,7 @@
   --gray-700: #2F3E4E;
   --gray-900: #18252F;
   --white: #FFFFFF;
-  --surface: #F7F8FA;
+  --surface: #F4F6F8;
   --surface-2: #EBEEF2;
   --border: #D8DEE6;
   --border-strong: #B8C4D0;
@@ -37,7 +37,7 @@
   --r-xs: 3px;
   --r-sm: 4px;
   --r-md: 6px;
-  --r-lg: 12px;
+  --r-lg: 8px;
 
   /* Legacy aliases kept for compatibility */
   --radius-sm: 4px;
@@ -53,16 +53,6 @@
   /* Accent — single primary only */
   --accent: var(--primary);
   --accent-light: var(--primary-light);
-
-  /* Builder design tokens */
-  --page-bg: #F7F8FA;
-  --card-border: #E6E8EC;
-  --card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
-  --card-shadow-hover: 0 4px 12px rgba(0,0,0,0.06);
-  --card-radius: 12px;
-  --section-gap: 28px;
-  --input-height: 44px;
-  --input-radius: 8px;
 }
 
 *, *::before, *::after {
@@ -75,7 +65,7 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-body);
-  background: var(--page-bg);
+  background: var(--surface);
   color: var(--text);
   line-height: 1.55;
   font-size: 14px;

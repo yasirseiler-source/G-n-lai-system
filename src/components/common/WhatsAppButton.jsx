@@ -14,7 +14,7 @@ import styles from './WhatsAppButton.module.css'
 
 // ── Konfiguration ────────────────────────────────────────────────────────────
 // TODO: Werte aus Umgebungsvariable laden oder hier direkt eintragen
-const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '905346930041'
+const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '4915112345678'
 const WHATSAPP_DEFAULT_MESSAGE = import.meta.env.VITE_WHATSAPP_MSG || 'Merhaba, bir soru sormak istiyorum.'
 
 /**

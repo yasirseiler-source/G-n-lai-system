@@ -1,48 +1,43 @@
 .sidebar {
   background: var(--white);
-  border: 1px solid var(--card-border);
-  border-radius: var(--card-radius);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
   overflow: hidden;
-  box-shadow: var(--card-shadow);
+  box-shadow: var(--shadow-sm);
 }
 
 /* Header */
 .header {
-  padding: 18px 20px;
-  border-bottom: 1px solid var(--card-border);
-}
-.headerTop {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 4px;
+  padding: 12px 16px;
+  background: var(--primary);
+  border-bottom: 1px solid var(--primary-dark);
 }
 .headerTitle {
   flex: 1;
   font-family: var(--font-heading);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
-  color: var(--text);
+  color: #fff;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
 }
 .liveIndicator {
   width: 6px; height: 6px;
   border-radius: 50%;
-  background: var(--ctx-accent, var(--primary));
+  background: #7DD3FA;
   animation: pulse 2.5s infinite;
-}
-.headerHelper {
-  font-size: 12px;
-  color: var(--text-muted);
-  line-height: 1.5;
 }
 
 /* Size block */
 .sizeBlock {
-  margin: 16px 20px;
-  padding: 14px 16px;
-  background: var(--page-bg);
-  border-radius: 10px;
-  border-left: 3px solid var(--ctx-accent, var(--primary));
+  margin: 14px;
+  padding: 12px 14px;
+  background: var(--gray-100);
+  border-radius: var(--r-md);
+  border-left: 3px solid var(--primary);
 }
 .sizeLabel {
   font-size: 10px;
@@ -50,29 +45,29 @@
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 .sizeRow {
   display: flex;
   align-items: baseline;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 .sizeLetter {
   font-family: var(--font-heading);
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 900;
   line-height: 1;
 }
 .sizeName {
   font-family: var(--font-heading);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--text-secondary);
 }
 .sizeBar {
   height: 3px;
-  background: var(--card-border);
+  background: var(--border);
   border-radius: 2px;
   overflow: hidden;
 }
@@ -86,24 +81,23 @@
 .statsRow {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  border-top: 1px solid var(--card-border);
-  border-bottom: 1px solid var(--card-border);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 .stat {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  padding: 16px 10px;
-  border-right: 1px solid var(--card-border);
+  gap: 3px;
+  padding: 12px 8px;
+  border-right: 1px solid var(--border);
 }
 .stat:last-child { border-right: none; }
 .statNum {
   font-family: var(--font-heading);
-  font-size: 1.75rem;
+  font-size: 1.25rem;
   font-weight: 800;
   line-height: 1;
-  color: var(--ctx-accent, var(--primary));
 }
 .statLabel {
   font-size: 9px;
@@ -115,14 +109,14 @@
 
 /* Section */
 .section {
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--card-border);
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
 }
 .sectionRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .sectionLabel {
   display: flex;
@@ -133,58 +127,59 @@
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.07em;
-  margin-bottom: 8px;
 }
 .sectionMeta {
-  font-size: 11px;
-  color: var(--ctx-accent, var(--primary));
+  font-size: 10px;
+  color: var(--primary);
   font-weight: 600;
 }
 
 /* Progress */
 .progressTrack {
   height: 3px;
-  background: var(--card-border);
+  background: var(--border);
   border-radius: 2px;
   overflow: hidden;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 .progressFill {
   height: 100%;
-  background: var(--ctx-accent, var(--primary));
+  background: var(--primary);
   border-radius: 2px;
   transition: width 0.4s ease;
 }
 
 /* List */
-.listCompact { display: flex; flex-direction: column; gap: 5px; }
+.listCompact { display: flex; flex-direction: column; gap: 4px; }
 .listRow {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 12px;
+  gap: 7px;
+  font-size: 11.5px;
   color: var(--text-secondary);
   font-weight: 500;
 }
 .moreRow {
   font-size: 11px;
   color: var(--text-muted);
-  padding-top: 4px;
+  padding-top: 2px;
 }
 
 /* Sensors */
-.sensorList { display: flex; flex-direction: column; gap: 2px; }
+.sensorTable { display: flex; flex-direction: column; }
 .sensorRow {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 5px 0;
-  font-size: 12px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 11.5px;
 }
+.sensorRow:last-child { border-bottom: none; }
 .sensorDot {
   width: 5px; height: 5px;
-  border-radius: 50%;
-  background: var(--ctx-accent, var(--primary));
+  border-radius: 1px;
+  background: var(--primary);
   flex-shrink: 0;
 }
 .sensorName { flex: 1; color: var(--text-secondary); font-weight: 500; }
@@ -192,68 +187,64 @@
   font-family: var(--font-heading);
   font-size: 11px;
   font-weight: 700;
-  color: var(--ctx-accent, var(--primary));
-  background: var(--ctx-accent-light, var(--primary-lighter));
-  padding: 2px 7px;
-  border-radius: 4px;
+  color: var(--primary);
+  background: var(--primary-lighter);
+  border: 1px solid var(--primary-light);
+  padding: 1px 6px;
+  border-radius: var(--r-xs);
 }
-.empty { font-size: 12px; color: var(--text-muted); font-style: italic; }
+.empty { font-size: 11px; color: var(--text-muted); font-style: italic; }
 
 /* Needs */
-.needsBars { display: flex; flex-direction: column; gap: 8px; }
-.needsRow { display: flex; align-items: center; gap: 10px; }
-.needsLabel { font-size: 11px; font-weight: 600; color: var(--text-secondary); width: 76px; flex-shrink: 0; }
-.needsTrack { flex: 1; height: 3px; background: var(--card-border); border-radius: 2px; overflow: hidden; }
+.needsBars { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.needsRow { display: flex; align-items: center; gap: 8px; }
+.needsLabel { font-size: 11px; font-weight: 600; color: var(--text-secondary); width: 72px; flex-shrink: 0; }
+.needsTrack { flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
 .needsFill { height: 100%; border-radius: 2px; transition: width 0.4s ease; }
 
 /* Customer */
 .customerBlock {
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--card-border);
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--primary-lighter);
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
 }
 .customerRow { display: flex; align-items: center; gap: 8px; }
 .customerName {
   font-family: var(--font-heading);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
-  color: var(--text);
+  color: var(--primary-dark);
 }
-.customerSub { font-size: 12px; color: var(--text-secondary); }
+.customerSub { font-size: 11px; color: var(--text-secondary); }
 
 /* CTA */
-.ctaBlock { padding: 20px; }
+.ctaBlock { padding: 14px; }
 .cta {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   width: 100%;
-  padding: 13px;
-  background: var(--ctx-accent, var(--primary));
+  padding: 11px;
+  background: var(--primary);
   color: #fff;
-  border-radius: 10px;
+  border-radius: var(--r-md);
   font-family: var(--font-heading);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.02em;
-  transition: opacity 0.15s, box-shadow 0.15s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  transition: background var(--transition), box-shadow var(--transition);
+  box-shadow: 0 2px 6px rgba(27,95,166,0.25);
 }
-.cta:hover { opacity: 0.9; }
-
-.ctaHelper {
-  text-align: center;
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-top: 8px;
-}
+.cta:hover { background: var(--primary-dark); }
 
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-/* ── RESPONSIVE ── */
+/* ── RESPONSIVE (LiveSidebar wird auf mobile als oberster Block angezeigt) ── */
 @media (max-width: 900px) {
   .sidebar { max-height: none; }
+  .statsRow { grid-template-columns: repeat(3, 1fr); }
 }
