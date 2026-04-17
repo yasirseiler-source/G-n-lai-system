@@ -1,59 +1,122 @@
-import Icon from '../ui/Icon'
+import { useState } from 'react'
 import { useTranslation } from '../../i18n/LanguageContext'
 import styles from './SensorSelector.module.css'
 
-export default function SensorSelector({ sensors, selected, onToggle, sensorMode, onModeChange, sensorQuantities, onQtyChange, effectiveSensorQty }) {
+export default function SensorSelector({ vertical, sensors, onChange, rooms = 1 }) {
   const { t } = useTranslation()
-  return (
-    <div className={styles.wrapper}>
-      <div className={styles.sectionHeader}>
-        <div className={styles.label}>
-          <Icon name="radio" size={14} color="var(--text-muted)" />
-          <span>{t('selector', 'recommendedSensors')}</span>
-        </div>
-        <div className={styles.headerRight}>
-          <span className={styles.count}>{selected.size} / {sensors.length} {t('selector', 'activeOf')}</span>
-          <div className={styles.toggle}>
-            <button className={`${styles.toggleBtn} ${sensorMode === 'auto' ? styles.toggleOn : ''}`} onClick={() => onModeChange('auto')}>{t('selector', 'automatic')}</button>
-            <button className={`${styles.toggleBtn} ${sensorMode === 'manual' ? styles.toggleOn : ''}`} onClick={() => onModeChange('manual')}>{t('selector', 'manual')}</button>
-          </div>
-        </div>
-      </div>
+  const [mode, setMode] = useState('auto')
 
-      <div className={styles.modeHint}>
-        <Icon name="info" size={12} color="var(--text-muted)" />
-        {sensorMode === 'auto' ? t('selector', 'autoHint') : t('selector', 'manualHint')}
+  // Get sensor translations
+  const getSensorTranslation = (sensorName, type = 'name') => {
+    const keyMap = {
+      'Kamera (davranış)': 'kameraDavranis',
+      'Ses analizi': 'sesAnalizi',
+      'Hareket sensörü': 'hareketSensoru',
+      'Kapı sensörü': 'kapiSensoru',
+      'Kamera (güvenlik)': 'kameraGuvenlik',
+      'Alarm sensörü': 'alarmSensoru',
+      'Erişim kontrolü': 'erisimKontrolu',
+      'Acil durum butonu': 'acilDurumButonu',
+      'Alan doluluk sensörü': 'alanDolulukSensoru',
+      'Ortam iklim sensörü': 'ortamIklimSensoru',
+      'Giriş alanı kamerası': 'girisAlaniKamerasi',
+    }
+    
+    const translationKey = keyMap[sensorName]
+    if (!translationKey) return sensorName
+    
+    return t('sensors', translationKey + (type === 'desc' ? 'Desc' : '')) || sensorName
+  }
+
+  const handleToggle = (name) => {
+    const current = sensors.find(s => s.name === name)
+    const exists = !!current
+    if (exists) {
+      onChange(sensors.filter(s => s.name !== name))
+    } else {
+      const sensorDef = vertical.sensors.find(s => s.name === name)
+      const autoQty = Math.ceil(rooms * (sensorDef?.autoCount || 1))
+      onChange([...sensors, { name, qty: autoQty }])
+    }
+  }
+
+  const handleQtyChange = (name, qty) => {
+    const val = parseInt(qty) || 0
+    onChange(sensors.map(s => s.name === name ? { ...s, qty: val } : s))
+  }
+
+  return (
+    <div className={styles.section}>
+      <div className={styles.header}>
+        <h3 className={styles.title}>{t('selector', 'recommendedSensors')}</h3>
+        <div className={styles.modeSwitch}>
+          <button 
+            className={`${styles.modeBtn} ${mode === 'auto' ? styles.modeActive : ''}`}
+            onClick={() => setMode('auto')}
+          >
+            {t('selector', 'automatic')}
+          </button>
+          <button 
+            className={`${styles.modeBtn} ${mode === 'manual' ? styles.modeActive : ''}`}
+            onClick={() => setMode('manual')}
+          >
+            {t('selector', 'manual')}
+          </button>
+        </div>
       </div>
+      
+      <p className={styles.hint}>
+        {mode === 'auto' ? t('selector', 'autoHint') : t('selector', 'manualHint')}
+      </p>
 
       <div className={styles.table}>
         <div className={styles.tableHeader}>
           <span>{t('selector', 'sensorType')}</span>
           <span>{t('selector', 'unit')}</span>
-          <span className={styles.colQty}>{t('selector', 'qty')}</span>
+          <span>{t('selector', 'qty')}</span>
         </div>
-        {sensors.map((sensor) => {
-          const isActive = selected.has(sensor.name)
-          const qty = effectiveSensorQty[sensor.name] || 0
+        
+        {vertical.sensors.map((sensor) => {
+          const selected = sensors.find(s => s.name === sensor.name)
+          const isActive = !!selected
+          const translatedName = getSensorTranslation(sensor.name, 'name')
+          const translatedDesc = getSensorTranslation(sensor.name, 'desc')
+          
           return (
-            <div key={sensor.name} className={`${styles.row} ${isActive ? styles.rowActive : ''}`}>
-              <div className={styles.rowLeft}>
-                <button className={styles.checkBtn} onClick={() => onToggle(sensor.name)}>
-                  <div className={`${styles.checkBox} ${isActive ? styles.checkOn : ''}`}>
-                    {isActive && <Icon name="check" size={9} color="#fff" />}
-                  </div>
-                </button>
-                <span className={styles.sensorName}>{sensor.name}</span>
+            <div 
+              key={sensor.name} 
+              className={`${styles.row} ${isActive ? styles.rowActive : ''}`}
+              onClick={() => handleToggle(sensor.name)}
+            >
+              <div className={styles.sensorInfo}>
+                <input 
+                  type="checkbox" 
+                  checked={isActive}
+                  onChange={() => {}}
+                  className={styles.checkbox}
+                />
+                <div>
+                  <div className={styles.sensorName}>{translatedName}</div>
+                  <div className={styles.sensorDesc}>{translatedDesc}</div>
+                </div>
               </div>
-              <span className={styles.sensorUnit}>{sensor.unit}</span>
-              <div className={styles.colQty}>
-                {isActive && (
-                  sensorMode === 'manual' ? (
-                    <input type="number" min="0" className={styles.qtyInput}
-                      value={sensorQuantities[sensor.name] ?? ''} placeholder="—"
-                      onChange={(e) => onQtyChange(sensor.name, e.target.value)} />
-                  ) : (
-                    <span className={styles.autoQty}>{qty}</span>
-                  )
+              
+              <span className={styles.unit}>{sensor.unit}</span>
+              
+              <div className={styles.qtyControl} onClick={e => e.stopPropagation()}>
+                {mode === 'auto' ? (
+                  <span className={styles.autoQty}>
+                    {isActive ? selected?.qty : Math.ceil(rooms * sensor.autoCount)}
+                  </span>
+                ) : (
+                  <input
+                    type="number"
+                    min="0"
+                    value={selected?.qty || ''}
+                    onChange={(e) => handleQtyChange(sensor.name, e.target.value)}
+                    className={styles.qtyInput}
+                    placeholder="0"
+                  />
                 )}
               </div>
             </div>
