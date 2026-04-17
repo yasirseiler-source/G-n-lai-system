@@ -5,46 +5,40 @@ export default function HeroSection({ vertical, includedModules = [] }) {
   const { t } = useTranslation()
 
   const getModuleTranslation = (moduleName) => {
-    const category = vertical.id === 'davranis' ? 'modules_davranis' :
-                    vertical.id === 'tehlike' ? 'modules_tehlike' : 'modules_alan'
+    const category = vertical.id === 'pflege' ? 'modules_pflege' :
+                    vertical.id === 'fabrik' ? 'modules_fabrik' : 'modules_unternehmen'
     
     const keyMap = {
-      'Davranış Analizi': 'davranisAnalizi',
-      'Grup Dinamikleri': 'grupDinamikleri',
-      'Çatışma Tespiti': 'catismaTespiti',
-      'Zorbalık Sinyalleri': 'zorbalikSinyalleri',
-      'Duygusal Durum': 'duygusalDurum',
-      'Öğretmen Bildirim Sistemi': 'ogretmenBildirim',
-      'Müdür Yönlendirmesi': 'mudurYonlendirmesi',
-      'Sınıf Yönetimi': 'sinifYonetimi',
-      'Öğrenci Takip': 'ogrenciTakip',
-      'Sosyal Risk Haritası': 'sosyalRiskHaritasi',
-      'Davranış Trendleri': 'davranisTrendleri',
-      'Duygusal Yoğunluk': 'duygusalYogunluk',
-      'Şiddet Tespiti': 'siddetTespiti',
-      'Hırsızlık Tespiti': 'hirsizlikTespiti',
-      'Eskalasyon Analizi': 'eskalasyonAnalizi',
-      'Tehdit Seviyesi': 'tehditSeviyesi',
-      'Acil Durum Algılama': 'acilDurumAlgilama',
-      'Güvenlik Bildirimleri': 'guvenlikBildirimleri',
-      'Olay Yönetimi': 'olayYonetimi',
-      'Risk Seviyesi': 'riskSeviyesi',
-      'Tehlike Haritası': 'tehlikeHaritasi',
-      'Şüpheli Davranış': 'supheliDavranis',
-      'Giriş‑Çıkış Kontrolü': 'girisCikisKontrolu',
-      'Alan Isı Haritası': 'alanIsiHaritasi',
-      'Kamera Bölgeleri': 'kameraBolgeleri',
-      'Alan Yönetimi': 'alanYonetimi',
-      'Ziyaretçi Kayıt': 'ziyaretciKayit',
-      'Bölge Kullanımı': 'bolgeKullanimi',
-      'Yapısal Riskler': 'yapisalRiskler',
-      'Bölge Güvenliği': 'bolgeGuvenligi',
-      'Hareket Yolları': 'hareketYollari',
-    }
-    
-    if (moduleName === 'Ziyaretçi Akışı') {
-      const key = category === 'modules_alan' ? 'ziyaretciAkisiAlan' : 'ziyaretciAkisi'
-      return t(category, key) || moduleName
+      'Sakin Yonetimi': 'sakinYonetimi',
+      'Oda Gorunumu': 'odaGorunumu',
+      'Bakim Talimatlari': 'bakimTalimatlari',
+      'Ilac Mantigi': 'ilacMantigi',
+      'Acil Cagri Sistemi': 'acilCagriSistemi',
+      'Dusme Riski Tespiti': 'dusmeRiskiTespiti',
+      'Personel Gorevleri': 'personelGorevleri',
+      'Ziyaretci Yonetimi': 'ziyaretciYonetimi',
+      'Vital Veri Arayuzleri': 'vitalVeriArayuzleri',
+      'Alarm ve Eskalasyon': 'alarmVeEskalasyon',
+      'Makine Gorunumu': 'makineGorunumu',
+      'Uretim Hatlari': 'uretimHatlari',
+      'Bakim Yonetimi': 'bakimYonetimi',
+      'Ariza Mantigi': 'arizaMantigi',
+      'Malzeme Akisi': 'malzemeAkisi',
+      'Depo Yapisi': 'depoYapisi',
+      'Personel Atama': 'personelAtama',
+      'Vardiya Gorunumu': 'vardiyaGorunumu',
+      'Guvenlik Bolgeleri': 'guvenlikBolgeleri',
+      'Performans Analizi': 'performansAnalizi',
+      'Departman Yapisi': 'departmanYapisi',
+      'Roller ve Sorumluluklar': 'rollerVeSorumluluklar',
+      'Gorev Yonetimi': 'gorevYonetimi',
+      'Ic Iletisim': 'icIletisim',
+      'Randevu ve Surec Gorunumu': 'randevuVeSurecGorunumu',
+      'Siparis ve Teslimat': 'siparisVeTeslimat',
+      'Ziyaretci ve Resepsiyon': 'ziyaretciVeResepsiyon',
+      'Oda Kullanimi': 'odaKullanimi',
+      'Cihaz ve Ag Durumu': 'cihazVeAgDurumu',
+      'Yonetim Panosu': 'yonetimPanosu',
     }
     
     const key = keyMap[moduleName]
