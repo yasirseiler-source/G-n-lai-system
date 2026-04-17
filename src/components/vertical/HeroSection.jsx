@@ -1,33 +1,94 @@
 import { useTranslation } from '../../i18n/LanguageContext'
 import styles from './HeroSection.module.css'
 
-export default function HeroSection({ vertical }) {
+export default function HeroSection({ vertical, includedModules = [] }) {
   const { t } = useTranslation()
-  const modules = vertical?.modules || []
-  const preview = modules.slice(0, 4)
-  const rest = modules.length - 4
+
+  // Get module translations
+  const getModuleTranslation = (moduleName) => {
+    const keyMap = {
+      'Davranış Analizi': 'davranisAnalizi',
+      'Grup Dinamikleri': 'grupDinamikleri',
+      'Çatışma Tespiti': 'catismaTespiti',
+      'Zorbalık Sinyalleri': 'zorbalikSinyalleri',
+      'Duygusal Durum': 'duygusalDurum',
+      'Öğretmen Bildirim Sistemi': 'ogretmenBildirim',
+      'Müdür Yönlendirmesi': 'mudurYonlendirmesi',
+      'Sınıf Yönetimi': 'sinifYonetimi',
+      'Öğrenci Takip': 'ogrenciTakip',
+      'Sosyal Risk Haritası': 'sosyalRiskHaritasi',
+      'Davranış Trendleri': 'davranisTrendleri',
+      'Duygusal Yoğunluk': 'duygusalYogunluk',
+      'Şiddet Tespiti': 'siddetTespiti',
+      'Hırsızlık Tespiti': 'hirsizlikTespiti',
+      'Eskalasyon Analizi': 'eskalasyonAnalizi',
+      'Tehdit Seviyesi': 'tehditSeviyesi',
+      'Acil Durum Algılama': 'acilDurumAlgilama',
+      'Güvenlik Bildirimleri': 'guvenlikBildirimleri',
+      'Olay Yönetimi': 'olayYonetimi',
+      'Ziyaretçi Akışı': 'ziyaretciAkisi',
+      'Risk Seviyesi': 'riskSeviyesi',
+      'Tehlike Haritası': 'tehlikeHaritasi',
+      'Şüpheli Davranış': 'supheliDavranis',
+      'Giriş‑Çıkış Kontrolü': 'girisCikisKontrolu',
+      'Alan Isı Haritası': 'alanIsiHaritasi',
+      'Kamera Bölgeleri': 'kameraBolgeleri',
+      'Alan Yönetimi': 'alanYonetimi',
+      'Ziyaretçi Kayıt': 'ziyaretciKayit',
+      'Bölge Kullanımı': 'bolgeKullanimi',
+      'Yapısal Riskler': 'yapisalRiskler',
+      'Bölge Güvenliği': 'bolgeGuvenligi',
+      'Hareket Yolları': 'hareketYollari',
+    }
+    
+    const translationKey = keyMap[moduleName]
+    if (!translationKey) return moduleName
+    
+    const category = vertical.id === 'davranis' ? 'modules_davranis' :
+                    vertical.id === 'tehlike' ? 'modules_tehlike' : 'modules_alan'
+    
+    return t(category, translationKey) || moduleName
+  }
+
+  const displayModules = includedModules.slice(0, 4)
+  const hasMore = includedModules.length > 4
 
   return (
-    <div className={styles.hero} style={{ background: `linear-gradient(135deg, ${vertical?.gradientFrom || '#1B5FA6'}, ${vertical?.gradientTo || '#0D3B6B'})` }}>
-      {vertical?.heroImage && <img className={styles.bgImg} src={vertical.heroImage} alt="" />}
-      <div className={styles.overlay} />
-      <div className={styles.grid} />
+    <div 
+      className={styles.hero}
+      style={{ 
+        backgroundImage: `linear-gradient(135deg, ${vertical.gradientFrom} 0%, ${vertical.gradientTo} 100%)` 
+      }}
+    >
       <div className={styles.content}>
-        <div className={styles.sectorLabel}>{vertical?.title}</div>
-        <h1 className={styles.title}>{vertical?.heroTitle}</h1>
-        <p className={styles.text}>{vertical?.heroText}</p>
-        {preview.length > 0 && (
-          <div className={styles.moduleTags}>
-            <span className={styles.moduleTagsLabel}>{t('hero', 'includedModules')}:</span>
-            {preview.map((m) => (
-              <span key={m.name} className={styles.moduleTag}>{m.name}</span>
-            ))}
-            {rest > 0 && (
-              <span className={styles.moduleTagMore}>+{rest} {t('hero', 'moreSuffix')}</span>
-            )}
+        <span className={styles.subtitle}>{vertical.subtitle}</span>
+        <h1 className={styles.title}>{vertical.heroTitle}</h1>
+        <p className={styles.text}>{vertical.heroText}</p>
+        
+        {displayModules.length > 0 && (
+          <div className={styles.modules}>
+            <span className={styles.modulesLabel}>{t('hero', 'includedModules')}:</span>
+            <div className={styles.modulesList}>
+              {displayModules.map((name, i) => (
+                <span key={name} className={styles.moduleTag}>
+                  {getModuleTranslation(name)}
+                  {i < displayModules.length - 1 && <span className={styles.separator}>•</span>}
+                </span>
+              ))}
+              {hasMore && (
+                <span className={styles.more}>
+                  +{includedModules.length - 4} {t('hero', 'moreSuffix')}
+                </span>
+              )}
+            </div>
           </div>
         )}
       </div>
+      
+      <div 
+        className={styles.image}
+        style={{ backgroundImage: `url(${vertical.heroImage})` }}
+      />
     </div>
   )
 }
