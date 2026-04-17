@@ -4,8 +4,10 @@ import styles from './HeroSection.module.css'
 export default function HeroSection({ vertical, includedModules = [] }) {
   const { t } = useTranslation()
 
-  // Get module translations
   const getModuleTranslation = (moduleName) => {
+    const category = vertical.id === 'davranis' ? 'modules_davranis' :
+                    vertical.id === 'tehlike' ? 'modules_tehlike' : 'modules_alan'
+    
     const keyMap = {
       'Davranış Analizi': 'davranisAnalizi',
       'Grup Dinamikleri': 'grupDinamikleri',
@@ -26,7 +28,6 @@ export default function HeroSection({ vertical, includedModules = [] }) {
       'Acil Durum Algılama': 'acilDurumAlgilama',
       'Güvenlik Bildirimleri': 'guvenlikBildirimleri',
       'Olay Yönetimi': 'olayYonetimi',
-      'Ziyaretçi Akışı': 'ziyaretciAkisi',
       'Risk Seviyesi': 'riskSeviyesi',
       'Tehlike Haritası': 'tehlikeHaritasi',
       'Şüpheli Davranış': 'supheliDavranis',
@@ -41,13 +42,15 @@ export default function HeroSection({ vertical, includedModules = [] }) {
       'Hareket Yolları': 'hareketYollari',
     }
     
-    const translationKey = keyMap[moduleName]
-    if (!translationKey) return moduleName
+    if (moduleName === 'Ziyaretçi Akışı') {
+      const key = category === 'modules_alan' ? 'ziyaretciAkisiAlan' : 'ziyaretciAkisi'
+      return t(category, key) || moduleName
+    }
     
-    const category = vertical.id === 'davranis' ? 'modules_davranis' :
-                    vertical.id === 'tehlike' ? 'modules_tehlike' : 'modules_alan'
+    const key = keyMap[moduleName]
+    if (!key) return moduleName
     
-    return t(category, translationKey) || moduleName
+    return t(category, key) || moduleName
   }
 
   const displayModules = includedModules.slice(0, 4)
