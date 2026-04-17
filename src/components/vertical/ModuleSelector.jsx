@@ -6,6 +6,11 @@ export default function ModuleSelector({ vertical, selected, onToggle }) {
   
   // Get module translations based on vertical ID
   const getModuleTranslation = (moduleKey, type = 'name') => {
+    // First check which vertical we're in
+    const category = vertical.id === 'davranis' ? 'modules_davranis' :
+                    vertical.id === 'tehlike' ? 'modules_tehlike' : 'modules_alan'
+    
+    // Map module names to translation keys - different keys for each category
     const keyMap = {
       // Davranış modules
       'Davranış Analizi': 'davranisAnalizi',
@@ -28,14 +33,14 @@ export default function ModuleSelector({ vertical, selected, onToggle }) {
       'Acil Durum Algılama': 'acilDurumAlgilama',
       'Güvenlik Bildirimleri': 'guvenlikBildirimleri',
       'Olay Yönetimi': 'olayYonetimi',
-      'Ziyaretçi Akışı': 'ziyaretciAkisi',
+      'Ziyaretçi Akışı': 'ziyaretciAkisi',  // This is for Tehlike
       'Risk Seviyesi': 'riskSeviyesi',
       'Tehlike Haritası': 'tehlikeHaritasi',
       'Şüpheli Davranış': 'supheliDavranis',
-      // Alan modules
+      // Alan modules - use different key for duplicate name
       'Giriş‑Çıkış Kontrolü': 'girisCikisKontrolu',
       'Alan Isı Haritası': 'alanIsiHaritasi',
-      'Ziyaretçi Akışı': 'ziyaretciAkisiAlan',
+      // For Alan category, we need to check the category to use the right key
       'Kamera Bölgeleri': 'kameraBolgeleri',
       'Alan Yönetimi': 'alanYonetimi',
       'Ziyaretçi Kayıt': 'ziyaretciKayit',
@@ -45,11 +50,14 @@ export default function ModuleSelector({ vertical, selected, onToggle }) {
       'Hareket Yolları': 'hareketYollari',
     }
     
+    // Special handling for "Ziyaretçi Akışı" which appears in both Tehlike and Alan
+    if (moduleKey === 'Ziyaretçi Akışı') {
+      const specialKey = category === 'modules_alan' ? 'ziyaretciAkisiAlan' : 'ziyaretciAkisi'
+      return t(category, specialKey + (type === 'desc' ? 'Desc' : '')) || moduleKey
+    }
+    
     const translationKey = keyMap[moduleKey]
     if (!translationKey) return moduleKey
-    
-    const category = vertical.id === 'davranis' ? 'modules_davranis' :
-                    vertical.id === 'tehlike' ? 'modules_tehlike' : 'modules_alan'
     
     return t(category, translationKey + (type === 'desc' ? 'Desc' : '')) || moduleKey
   }
