@@ -6,7 +6,6 @@ export default function SensorSelector({ vertical, sensors, onChange, rooms = 1 
   const { t } = useTranslation()
   const [mode, setMode] = useState('auto')
 
-  // Get sensor translations
   const getSensorTranslation = (sensorName, type = 'name') => {
     const keyMap = {
       'Kamera (davranış)': 'kameraDavranis',
@@ -22,16 +21,15 @@ export default function SensorSelector({ vertical, sensors, onChange, rooms = 1 
       'Giriş alanı kamerası': 'girisAlaniKamerasi',
     }
     
-    const translationKey = keyMap[sensorName]
-    if (!translationKey) return sensorName
+    const key = keyMap[sensorName]
+    if (!key) return sensorName
     
-    return t('sensors', translationKey + (type === 'desc' ? 'Desc' : '')) || sensorName
+    return t('sensors', type === 'desc' ? key + 'Desc' : key) || sensorName
   }
 
   const handleToggle = (name) => {
     const current = sensors.find(s => s.name === name)
-    const exists = !!current
-    if (exists) {
+    if (current) {
       onChange(sensors.filter(s => s.name !== name))
     } else {
       const sensorDef = vertical.sensors.find(s => s.name === name)
