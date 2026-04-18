@@ -3,11 +3,11 @@ import styles from './ModuleSelector.module.css'
 
 export default function ModuleSelector({ vertical, selected, onToggle }) {
   const { t } = useTranslation()
-  
+
   const getModuleTranslation = (moduleName, type = 'name') => {
     const category = vertical.id === 'pflege' ? 'modules_pflege' :
                     vertical.id === 'fabrik' ? 'modules_fabrik' : 'modules_unternehmen'
-    
+
     const keyMap = {
       'Sakin Yonetimi': 'sakinYonetimi',
       'Oda Gorunumu': 'odaGorunumu',
@@ -40,21 +40,46 @@ export default function ModuleSelector({ vertical, selected, onToggle }) {
       'Cihaz ve Ag Durumu': 'cihazVeAgDurumu',
       'Yonetim Panosu': 'yonetimPanosu',
     }
-    
+
     const key = keyMap[moduleName]
     if (!key) return moduleName
-    
-    return t(category, type === 'desc' ? key + 'Desc' : key) || moduleName
-  }
 
-  const groups = {
-    recommended: vertical.modules.filter(m => m.group === 'recommended'),
-    operation: vertical.modules.filter(m => m.group === 'operation'),
-    security: vertical.modules.filter(m => m.group === 'security'),
+    return t(category, type === 'desc' ? key + 'Desc' : key) || moduleName
   }
 
   const activeCount = selected.length
   const totalCount = vertical.modules.length
+
+  // Check if modules have group information
+  const hasGroups = vertical.modules.some(m => m.group)
+
+  const renderModuleCard = (module) => {
+    const isActive = selected.includes(module.name)
+    const translatedName = getModuleTranslation(module.name, 'name')
+    const translatedDesc = getModuleTranslation(module.name, 'desc')
+
+    return (
+      <button
+        key={module.name}
+        className={`${styles.card} ${isActive ? styles.active : ''}`}
+        onClick={() => onToggle(module.name)}
+      >
+        <div className={styles.cardHeader}>
+          <input
+            type="checkbox"
+            checked={isActive}
+            onChange={() => {}}
+            className={styles.checkbox}
+          />
+          <span className={`${styles.status} ${isActive ? styles.statusActive : ''}`}>
+            {isActive ? t('selector', 'active') : t('selector', 'inactive')}
+          </span>
+        </div>
+        <h5 className={styles.cardTitle}>{translatedName}</h5>
+        <p className={styles.cardDesc}>{translatedDesc}</p>
+      </button>
+    )
+  }
 
   return (
     <div className={styles.section}>
@@ -65,43 +90,29 @@ export default function ModuleSelector({ vertical, selected, onToggle }) {
         </span>
       </div>
 
-      {Object.entries(groups).map(([groupKey, modules]) => (
-        <div key={groupKey} className={styles.group}>
-          <h4 className={styles.groupTitle}>
-            {t('builder', groupKey === 'recommended' ? 'groupRecommended' : 
-               groupKey === 'operation' ? 'groupOperation' : 'groupSecurity')}
-          </h4>
-          <div className={styles.grid}>
-            {modules.map((module) => {
-              const isActive = selected.includes(module.name)
-              const translatedName = getModuleTranslation(module.name, 'name')
-              const translatedDesc = getModuleTranslation(module.name, 'desc')
-              
-              return (
-                <button
-                  key={module.name}
-                  className={`${styles.card} ${isActive ? styles.active : ''}`}
-                  onClick={() => onToggle(module.name)}
-                >
-                  <div className={styles.cardHeader}>
-                    <input
-                      type="checkbox"
-                      checked={isActive}
-                      onChange={() => {}}
-                      className={styles.checkbox}
-                    />
-                    <span className={`${styles.status} ${isActive ? styles.statusActive : ''}`}>
-                      {isActive ? t('selector', 'active') : t('selector', 'inactive')}
-                    </span>
-                  </div>
-                  <h5 className={styles.cardTitle}>{translatedName}</h5>
-                  <p className={styles.cardDesc}>{translatedDesc}</p>
-                </button>
-              )
-            })}
-          </div>
+      {hasGroups ? (
+        // Grouped view when group field exists
+        ['recommended', 'operation', 'security'].map((groupKey) => {
+          const modules = vertical.modules.filter(m => m.group === groupKey)
+          if (modules.length === 0) return null
+          return (
+            <div key={groupKey} className={styles.group}>
+              <h4 className={styles.groupTitle}>
+                {t('builder', groupKey === 'recommended' ? 'groupRecommended' :
+                   groupKey === 'operation' ? 'groupOperation' : 'groupSecurity')}
+              </h4>
+              <div className={styles.grid}>
+                {modules.map(renderModuleCard)}
+              </div>
+            </div>
+          )
+        })
+      ) : (
+        // Flat view when no group field (default for current verticals.js)
+        <div className={styles.grid}>
+          {vertical.modules.map(renderModuleCard)}
         </div>
-      ))}
+      )}
     </div>
   )
 }
