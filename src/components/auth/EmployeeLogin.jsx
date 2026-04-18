@@ -58,7 +58,7 @@ export default function EmployeeLogin({ onLogin, loginError, onClearError }) {
                 onChange={(e) => { setPassword(e.target.value); onClearError() }}
               />
               <button type="button" className={styles.eyeBtn} onClick={() => setShowPw((v) => !v)} tabIndex={-1}>
-                <Icon name={showPw ? 'check' : 'info'} size={13} color="var(--text-muted)" />
+                <Icon name={showPw ? 'eyeOff' : 'eye'} size={13} color="var(--text-muted)" />
               </button>
             </div>
           </div>

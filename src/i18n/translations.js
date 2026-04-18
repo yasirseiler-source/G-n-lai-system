@@ -359,10 +359,11 @@ export const translations = {
     },
     // Needs levels (sidebar/finalpage)
     needs: {
-      security:    'Güvenlik',
-      automation:  'Otomasyon',
-      maintenance: 'Bakım',
-      emergency:   'Acil Durum',
+      security:      'Güvenlik',
+      automation:    'Otomasyon',
+      communication: 'İletişim',
+      maintenance:   'Bakım',
+      emergency:     'Acil Durum',
     },
     // Common
     common: {
@@ -699,7 +700,7 @@ export const translations = {
     },
     kpi: { title: 'KPI-Eingabe' },
     hero: { includedModules: 'Enthaltene Module', moreSuffix: 'weitere' },
-    needs: { security: 'Sicherheit', automation: 'Automation', maintenance: 'Wartung', emergency: 'Notfall' },
+    needs: { security: 'Sicherheit', automation: 'Automation', communication: 'Kommunikation', maintenance: 'Wartung', emergency: 'Notfall' },
     common: { back: 'Zurück', cancel: 'Abbrechen', save: 'Speichern', loading: 'Lädt…', error: 'Fehler', of: 'von' },
   },
 
@@ -1027,7 +1028,7 @@ export const translations = {
     },
     kpi: { title: 'KPI Input' },
     hero: { includedModules: 'Included Modules', moreSuffix: 'more' },
-    needs: { security: 'Security', automation: 'Automation', maintenance: 'Maintenance', emergency: 'Emergency' },
+    needs: { security: 'Security', automation: 'Automation', communication: 'Communication', maintenance: 'Maintenance', emergency: 'Emergency' },
     common: { back: 'Back', cancel: 'Cancel', save: 'Save', loading: 'Loading…', error: 'Error', of: 'of' },
   },
 }

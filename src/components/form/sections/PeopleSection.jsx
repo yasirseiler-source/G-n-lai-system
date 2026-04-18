@@ -19,19 +19,19 @@ export default function PeopleSection({ formData, onUpdate }) {
         <label className={styles.label}>{t('form','shiftSystem')}</label>
         <select className={styles.select} value={formData.schichtsystem || ''} onChange={u('schichtsystem')}>
           <option value="">{t('form','pleaseSelect')}</option>
-          <option>{t('form','shiftNone')}</option>
-          <option>{t('form','shift2')}</option>
-          <option>{t('form','shift3')}</option>
-          <option>{t('form','shift247')}</option>
+          <option value="none">{t('form','shiftNone')}</option>
+          <option value="shift2">{t('form','shift2')}</option>
+          <option value="shift3">{t('form','shift3')}</option>
+          <option value="shift247">{t('form','shift247')}</option>
         </select>
       </div>
       <div className={styles.group}>
         <label className={styles.label}>{t('form','visitorLevel')}</label>
         <select className={styles.select} value={formData.besucheraufkommen || ''} onChange={u('besucheraufkommen')}>
           <option value="">{t('form','pleaseSelect')}</option>
-          <option>{t('form','visitorLow')}</option>
-          <option>{t('form','visitorMedium')}</option>
-          <option>{t('form','visitorHigh')}</option>
+          <option value="low">{t('form','visitorLow')}</option>
+          <option value="medium">{t('form','visitorMedium')}</option>
+          <option value="high">{t('form','visitorHigh')}</option>
         </select>
       </div>
     </div>

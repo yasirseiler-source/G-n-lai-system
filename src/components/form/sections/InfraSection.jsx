@@ -27,18 +27,18 @@ export default function InfraSection({ formData, onUpdate }) {
         <label className={styles.label}>{t('form','networkStructure')}</label>
         <select className={styles.select} value={formData.vorhandenesNetzwerk || ''} onChange={u('vorhandenesNetzwerk')}>
           <option value="">{t('form','pleaseSelect')}</option>
-          <option>{t('form','networkYesManaged')}</option>
-          <option>{t('form','networkYesSimple')}</option>
-          <option>{t('form','networkNo')}</option>
+          <option value="managed">{t('form','networkYesManaged')}</option>
+          <option value="simple">{t('form','networkYesSimple')}</option>
+          <option value="none">{t('form','networkNo')}</option>
         </select>
       </div>
       <div className={styles.group}>
         <label className={styles.label}>{t('form','serverExisting')}</label>
         <select className={styles.select} value={formData.serverVorhanden || ''} onChange={u('serverVorhanden')}>
           <option value="">{t('form','pleaseSelect')}</option>
-          <option>{t('form','serverYes')}</option>
-          <option>{t('form','serverNo')}</option>
-          <option>{t('form','serverCloud')}</option>
+          <option value="yes">{t('form','serverYes')}</option>
+          <option value="no">{t('form','serverNo')}</option>
+          <option value="cloud">{t('form','serverCloud')}</option>
         </select>
       </div>
     </div>

@@ -41,12 +41,12 @@ export default function CompanySection({ formData, onUpdate, verticalId }) {
         <label className={styles.label}>{t('form','sector')}</label>
         <select className={styles.select} value={formData.branche || ''} onChange={u('branche')}>
           <option value="">{t('form','pleaseSelect')}</option>
-          <option>{t('form','sectorCare')}</option>
-          <option>{t('form','sectorProduction')}</option>
-          <option>{t('form','sectorLogistics')}</option>
-          <option>{t('form','sectorOffice')}</option>
-          <option>{t('form','sectorService')}</option>
-          <option>{t('form','sectorOther')}</option>
+          <option value="care">{t('form','sectorCare')}</option>
+          <option value="production">{t('form','sectorProduction')}</option>
+          <option value="logistics">{t('form','sectorLogistics')}</option>
+          <option value="office">{t('form','sectorOffice')}</option>
+          <option value="service">{t('form','sectorService')}</option>
+          <option value="other">{t('form','sectorOther')}</option>
         </select>
       </div>
       <div className={`${styles.group} ${styles.full}`}>

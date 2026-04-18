@@ -34,12 +34,12 @@ function generateTechnicalHints({ systemSize, selectedModules, selectedSensors, 
   const hints = []
   if (systemSize === 'XL') hints.push('XL sistem, özel bir sunucu altyapısı ve yedekli ağ bağlantısı gerektirir.')
   if (systemSize === 'L' || systemSize === 'XL') hints.push('Yapılandırılmış ağ segmentasyonu (VLAN) önerilir.')
-  if (selectedSensors.includes('Zugangskontrolle')) hints.push('Erişim kontrolü, mevcut kilit sistemleriyle arayüz gerektirebilir.')
-  if (selectedModules.includes('Vitaldaten-Schnittstellen')) hints.push('Vital veri entegrasyonu, HL7/FHIR uyumlu cihaz arayüzleri gerektirir.')
-  if (selectedModules.includes('Alarm- und Eskalationslogik') || selectedModules.includes('Notrufsystem')) hints.push('Acil durum ve alarm sistemleri yedekli hatlar üzerinde çalıştırılmalıdır.')
-  if (selectedSensors.includes('RFID / Materialtracking')) hints.push('RFID takibi, sahada etiket altyapısı ve okuyucu konumlandırması gerektirir.')
+  if (selectedSensors.includes('Erişim Kontrolü')) hints.push('Erişim kontrolü, mevcut kilit sistemleriyle arayüz gerektirebilir.')
+  if (selectedModules.includes('Vital Veri Arayüzleri')) hints.push('Vital veri entegrasyonu, HL7/FHIR uyumlu cihaz arayüzleri gerektirir.')
+  if (selectedModules.includes('Alarm ve Eskalasyon') || selectedModules.includes('Acil Çağrı Sistemi')) hints.push('Acil durum ve alarm sistemleri yedekli hatlar üzerinde çalıştırılmalıdır.')
+  if (selectedSensors.includes('RFID / Malzeme Takibi')) hints.push('RFID takibi, sahada etiket altyapısı ve okuyucu konumlandırması gerektirir.')
   if (formData.vorhandeneKameras && Number(formData.vorhandeneKameras) > 0) hints.push(`Mevcut ${formData.vorhandeneKameras} kamera yeni sisteme entegre edilebilir.`)
-  if (formData.serverVorhanden === 'ja') hints.push('Mevcut sunucu, yerel veri işleme için temel olarak kullanılabilir.')
+  if (formData.serverVorhanden === 'yes') hints.push('Mevcut sunucu, yerel veri işleme için temel olarak kullanılabilir.')
   if (hints.length === 0) hints.push('Standart kurulum — özel teknik gereksinim tespit edilmedi.')
   return hints
 }

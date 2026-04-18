@@ -17,10 +17,11 @@ export default function LiveSidebar({
   }
 
   const needsKeys = [
-    { key: 'sicherheitsbedarf',    label: t('needs', 'security') },
+    { key: 'sicherheitsbedarf',      label: t('needs', 'security') },
     { key: 'automatisierungsbedarf', label: t('needs', 'automation') },
-    { key: 'wartungsbedarf',       label: t('needs', 'maintenance') },
-    { key: 'notfallmanagement',    label: t('needs', 'emergency') },
+    { key: 'kommunikationsbedarf',   label: t('needs', 'communication') },
+    { key: 'wartungsbedarf',         label: t('needs', 'maintenance') },
+    { key: 'notfallmanagement',      label: t('needs', 'emergency') },
   ]
 
   // levelOptions müssen der Sprache entsprechen

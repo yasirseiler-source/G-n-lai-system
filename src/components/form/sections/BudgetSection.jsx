@@ -32,10 +32,10 @@ export default function BudgetSection({ formData, onUpdate }) {
         <label className={styles.label}>{t('form','priority')}</label>
         <select className={styles.select} value={formData.prioritaet || ''} onChange={u('prioritaet')}>
           <option value="">{t('form','pleaseSelect')}</option>
-          <option>{t('form','priorityLow')}</option>
-          <option>{t('form','priorityMedium')}</option>
-          <option>{t('form','priorityHigh')}</option>
-          <option>{t('form','priorityUrgent')}</option>
+          <option value="low">{t('form','priorityLow')}</option>
+          <option value="medium">{t('form','priorityMedium')}</option>
+          <option value="high">{t('form','priorityHigh')}</option>
+          <option value="urgent">{t('form','priorityUrgent')}</option>
         </select>
       </div>
 
@@ -43,11 +43,11 @@ export default function BudgetSection({ formData, onUpdate }) {
         <label className={styles.label}>{t('form','timeline')}</label>
         <select className={styles.select} value={formData.umsetzungszeitraum || ''} onChange={u('umsetzungszeitraum')}>
           <option value="">{t('form','pleaseSelect')}</option>
-          <option>{t('form','timelineNow')}</option>
-          <option>{t('form','timelineShort')}</option>
-          <option>{t('form','timelineMedium')}</option>
-          <option>{t('form','timelineLong')}</option>
-          <option>{t('form','timelineOpen')}</option>
+          <option value="now">{t('form','timelineNow')}</option>
+          <option value="short">{t('form','timelineShort')}</option>
+          <option value="medium">{t('form','timelineMedium')}</option>
+          <option value="long">{t('form','timelineLong')}</option>
+          <option value="open">{t('form','timelineOpen')}</option>
         </select>
       </div>
     </div>
