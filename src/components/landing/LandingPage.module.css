@@ -7,15 +7,29 @@
 /* ══ HERO ═══════════════════════════════════════════════════════════ */
 .hero {
   position: relative;
-  margin: 28px 0 36px;
-  background: var(--primary);          /* #5B8DB8 */
+  margin: 0 0 36px;
+  background: #FFFFFF;
   border-radius: var(--r-lg);
-  padding: 52px 56px;
+  padding: 56px 56px 56px 60px;
   overflow: hidden;
-  min-height: 300px;
+  min-height: 440px;
   display: flex;
   align-items: center;
   gap: 40px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 16px rgba(91,141,184,0.07);
+}
+
+/* Subtiler Hintergrund-Verlauf */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 10% 55%, rgba(91,141,184,0.055) 0%, transparent 50%),
+    radial-gradient(ellipse at 6% 24%, rgba(128,192,155,0.04) 0%, transparent 44%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Linke Spalte */
@@ -30,54 +44,91 @@
 .heroRight {
   position: relative;
   z-index: 2;
-  flex: 0 0 420px;
+  flex: 0 0 440px;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
+}
+
+/* Visual wrapper + half-circle mask (wie Wiseye) */
+.heroVisualWrap {
+  width: 440px;
+  height: 440px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.heroVisualMask {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
+  background: radial-gradient(ellipse at 50% 45%, rgba(91,141,184,0.06) 0%, rgba(128,192,155,0.04) 60%, transparent 100%);
 }
 
 .heroSvg {
   width: 100%;
-  max-width: 420px;
-  height: auto;
+  height: 100%;
   display: block;
-  filter: drop-shadow(0 8px 32px rgba(0,0,0,0.18));
 }
 
-/* Eyebrow */
+/* Eyebrow — Wiseye-Style */
 .heroEyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   font-size: 10px;
   font-weight: 700;
-  color: rgba(255,255,255,0.55);
-  letter-spacing: 0.14em;
+  color: #5B8DB8;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  margin-bottom: 14px;
+  margin-bottom: 28px;
 }
 
-/* Titel: WISE (fett) + NESS (dünn) */
+.heroEyebrowLine {
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background: #5B8DB8;
+  opacity: 0.65;
+  flex-shrink: 0;
+}
+
+/* Titel: WISE (dünn) + NESS (fett) — Wiseye letter-spacing */
 .heroTitle {
-  font-size: 3.6rem;
+  font-size: 4rem;
   line-height: 1;
-  margin-bottom: 18px;
-  letter-spacing: 0.01em;   /* bewusst klein halten */
-}
-
-.heroTitleBold {
-  font-weight: 700;
-  color: #fff;
+  margin-bottom: 28px;
+  letter-spacing: 0.28em;
 }
 
 .heroTitleLight {
   font-weight: 300;
-  color: rgba(255,255,255,0.75);
+  color: #6F6F6F;
 }
 
-/* Beschreibungstext */
+.heroTitleBold {
+  font-weight: 700;
+  color: #6F6F6F;
+}
+
+/* Slogan / Headline — Wiseye-Style */
+.heroHeadline {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.55;
+  color: #3E3E3E;
+  margin-bottom: 20px;
+  letter-spacing: 0.01em;
+  max-width: 460px;
+}
+
+/* Beschreibungstext — grau, kleiner */
 .heroText {
-  color: rgba(255,255,255,0.8);
+  color: #6C6C6C;
   font-size: 14px;
-  line-height: 1.7;
-  margin-bottom: 32px;
+  line-height: 1.75;
+  margin-bottom: 36px;
   max-width: 460px;
 }
 
@@ -91,58 +142,50 @@
 .btnPrimary {
   display: inline-flex;
   align-items: center;
-  height: 40px;
-  padding: 0 22px;
-  background: #fff;
-  color: var(--primary);
-  font-size: 13px;
+  height: 42px;
+  padding: 0 26px;
+  background: #5B8DB8;
+  color: #fff;
+  font-size: 12px;
   font-weight: 700;
+  letter-spacing: 0.06em;
   border-radius: var(--r-md);
   border: none;
   cursor: pointer;
-  transition: opacity 0.15s, transform 0.15s;
+  transition: background 0.18s, transform 0.15s, box-shadow 0.18s;
   white-space: nowrap;
+  box-shadow: 0 2px 10px rgba(91,141,184,0.28);
 }
-.btnPrimary:hover { opacity: 0.9; transform: translateY(-1px); }
+.btnPrimary:hover { background: #4a7ba5; transform: translateY(-1px); box-shadow: 0 5px 18px rgba(91,141,184,0.36); }
 
 .btnOutline {
   display: inline-flex;
   align-items: center;
-  height: 40px;
-  padding: 0 22px;
+  height: 42px;
+  padding: 0 26px;
   background: transparent;
-  color: #fff;
-  font-size: 13px;
+  color: #5B8DB8;
+  font-size: 12px;
   font-weight: 600;
+  letter-spacing: 0.04em;
   border-radius: var(--r-md);
-  border: 1.5px solid rgba(255,255,255,0.45);
+  border: 1.5px solid rgba(91,141,184,0.45);
   cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
   white-space: nowrap;
 }
-.btnOutline:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+.btnOutline:hover { border-color: #5B8DB8; background: rgba(91,141,184,0.06); color: #4a7ba5; }
 
 /* Hintergrund-Gitter-Dekoration */
 .heroGrid {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    linear-gradient(rgba(91,141,184,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(91,141,184,0.04) 1px, transparent 1px);
   background-size: 32px 32px;
   pointer-events: none;
   z-index: 1;
-}
-
-/* SVG-Puls-Animation */
-@keyframes svgPulse {
-  0%, 100% { opacity: 0.9; transform: scale(1); }
-  50%       { opacity: 0.3; transform: scale(1.6); }
-}
-.svgPulse {
-  transform-origin: center;
-  transform-box: fill-box;
-  animation: svgPulse 2.4s ease-in-out infinite;
 }
 
 /* ══ DIVIDER ═════════════════════════════════════════════════════════ */
@@ -297,27 +340,29 @@
 @media (max-width: 1024px) {
   .page { padding: 0 18px 48px; }
   .hero { padding: 40px 36px; gap: 28px; }
-  .heroTitle { font-size: 2.8rem; }
-  .heroRight { flex: 0 0 320px; }
+  .heroTitle { font-size: 3rem; letter-spacing: 0.22em; }
+  .heroRight { flex: 0 0 360px; }
+  .heroVisualWrap { width: 360px; height: 360px; }
   .cards { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
   .page { padding: 0 12px 40px; }
   .hero {
-    flex-direction: column;
+    flex-direction: column-reverse;
     padding: 32px 24px;
-    margin: 16px 0 24px;
+    margin: 0 0 24px;
     min-height: auto;
-    gap: 28px;
+    gap: 24px;
   }
   .heroRight {
     flex: none;
     width: 100%;
     justify-content: center;
   }
-  .heroSvg { max-width: 340px; }
-  .heroTitle { font-size: 2.4rem; }
+  .heroVisualWrap { width: 300px; height: 300px; }
+  .heroTitle { font-size: 2.6rem; letter-spacing: 0.18em; }
+  .heroHeadline { font-size: 17px; }
   .heroText { font-size: 13px; margin-bottom: 24px; }
   .cards { grid-template-columns: 1fr; gap: 12px; }
   .featureBar { flex-direction: column; gap: 12px; align-items: flex-start; padding: 14px 16px; }
@@ -325,7 +370,8 @@
 }
 
 @media (max-width: 480px) {
-  .heroTitle { font-size: 2rem; }
+  .heroTitle { font-size: 2.1rem; letter-spacing: 0.14em; }
+  .heroVisualWrap { width: 240px; height: 240px; }
   .heroBtns { flex-direction: column; }
   .btnPrimary, .btnOutline { width: 100%; justify-content: center; }
 }

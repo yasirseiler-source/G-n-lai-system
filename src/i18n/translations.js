@@ -21,7 +21,8 @@ export const translations = {
     landing: {
       systemLabel:   'WISENESS SİSTEM — INTAKE PANELİ',
       heroEyebrow:   'PROFESYONEL YÖNETİM SİSTEMİ',
-      heroTitle:     'Profesyonel Sistem\nIntake & Yapılandırma',
+      heroTitle:     'WISENESS',
+      heroHeadline:  'Süreçler net şekilde yönetilir.\nKararlar bilgece alınır.',
       heroText:      'Yapılandırılmış ihtiyaç tespiti, otomatik sistem önerisi ve kurumsal müşteriler için bireysel teklif planlaması.',
       ctaExplore:    'Sistemi Keşfet',
       ctaContact:    'İletişim',
@@ -398,7 +399,8 @@ export const translations = {
     landing: {
       systemLabel:   'WISENESS SYSTEM — INTAKE-PANEL',
       heroEyebrow:   'PROFESSIONELLES MANAGEMENT-SYSTEM',
-      heroTitle:     'Professionelles System\nIntake & Konfiguration',
+      heroTitle:     'WISENESS',
+      heroHeadline:  'Abläufe werden klar geführt.\nEntscheidungen werden weise getroffen.',
       heroText:      'Strukturierte Bedarfserfassung, automatische Systemempfehlung und individuelle Angebotsplanung für Unternehmenskunden.',
       ctaExplore:    'System entdecken',
       ctaContact:    'Kontakt',
@@ -733,7 +735,8 @@ export const translations = {
     landing: {
       systemLabel:   'WISENESS SYSTEM — INTAKE PANEL',
       heroEyebrow:   'PROFESSIONAL MANAGEMENT SYSTEM',
-      heroTitle:     'Professional System\nIntake & Configuration',
+      heroTitle:     'WISENESS',
+      heroHeadline:  'Processes are clearly managed.\nDecisions are made wisely.',
       heroText:      'Structured needs assessment, automatic system recommendation and individual offer planning for enterprise customers.',
       ctaExplore:    'Discover System',
       ctaContact:    'Contact',

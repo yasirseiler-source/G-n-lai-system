@@ -1,0 +1,123 @@
+.page { max-width: 1200px; margin: 0 auto; padding: 24px 28px 60px; }
+
+/* Success */
+.successPage { min-height: calc(100vh - var(--navbar-height)); display: flex; align-items: center; justify-content: center; padding: 40px; }
+.successCard { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 48px; text-align: center; max-width: 480px; box-shadow: var(--shadow-md); }
+.successIconWrap { width: 52px; height: 52px; border-radius: var(--r-md); background: var(--status-green-bg); border: 1px solid #B3DCC7; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+.successTitle { font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; }
+.successText { font-size: 13px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 16px; }
+.successMeta { font-size: 12px; color: var(--primary); font-weight: 600; margin-bottom: 24px; }
+.backBtn { display: inline-flex; align-items: center; gap: 8px; background: var(--primary-lighter); border: 1px solid var(--primary-light); color: var(--primary); padding: 9px 18px; border-radius: var(--r-md); font-family: var(--font-heading); font-weight: 700; font-size: 12px; transition: background var(--transition); }
+.backBtn:hover { background: var(--primary-light); }
+
+/* Page header */
+.pageHeader { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
+.backLink { display: flex; align-items: center; gap: 5px; background: none; color: var(--primary); font-family: var(--font-heading); font-size: 12px; font-weight: 600; padding: 6px 0; margin-top: 4px; transition: opacity var(--transition); white-space: nowrap; }
+.backLink:hover { opacity: 0.7; }
+.pageTitle { font-size: 1.5rem; font-weight: 800; margin-bottom: 4px; }
+.pageSubtitle { font-size: 12px; color: var(--text-muted); }
+
+/* Grid */
+.grid { display: grid; grid-template-columns: 1fr 360px; gap: 16px; align-items: start; }
+.left, .right { display: flex; flex-direction: column; gap: 12px; }
+
+/* Card */
+.card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 18px 20px; box-shadow: var(--shadow-xs); }
+.cardHead {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 700; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  margin-bottom: 14px; padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.cardHead span:first-of-type { flex: 1; }
+.countTag { font-size: 11px; font-weight: 700; color: var(--primary); background: var(--primary-lighter); border: 1px solid var(--primary-light); padding: 1px 8px; border-radius: var(--r-sm); }
+
+/* Analysis */
+.analysisRow { display: flex; align-items: center; gap: 24px; }
+.donutWrap { display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0; }
+.donutLabel { font-size: 10px; font-weight: 600; color: var(--text-muted); }
+
+.analysisMid { flex: 1; }
+.analysisSub { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 8px; }
+
+/* Size bar */
+.sizeBar { display: flex; gap: 3px; margin-bottom: 8px; }
+.sizeSegment { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+.sizeSegBar { width: 100%; height: 6px; border-radius: 2px; transition: all 0.4s ease; }
+.sizeSegLabel { font-size: 10px; font-weight: 700; font-family: var(--font-heading); transition: all 0.4s ease; }
+
+.sizeReadout { display: flex; align-items: baseline; gap: 7px; margin-bottom: 4px; }
+.sizeCode { font-family: var(--font-heading); font-size: 1.6rem; font-weight: 900; line-height: 1; }
+.sizeName { font-family: var(--font-heading); font-size: 13px; font-weight: 700; color: var(--text-secondary); }
+.sizeDesc { font-size: 11px; color: var(--text-muted); }
+
+.cameraBlock { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; }
+.cameraNum { font-family: var(--font-heading); font-size: 2rem; font-weight: 900; color: var(--primary); line-height: 1; }
+.cameraLabel { font-size: 10px; color: var(--text-muted); font-weight: 600; text-align: center; line-height: 1.4; }
+
+/* Tags */
+.tagList { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-size: 11px; font-weight: 600; font-family: var(--font-heading); padding: 3px 8px; border-radius: var(--r-sm); background: var(--primary-lighter); color: var(--primary-dark); border: 1px solid var(--primary-light); }
+
+/* Sensor table */
+.sensorTable { border: 1px solid var(--border); border-radius: var(--r-sm); overflow: hidden; }
+.sensorTableHead { display: flex; justify-content: space-between; padding: 5px 10px; background: var(--gray-100); font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); }
+.sensorRow { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-bottom: 1px solid var(--border); }
+.sensorRow:last-child { border-bottom: none; }
+.sensorDot { width: 5px; height: 5px; border-radius: 1px; background: var(--primary); flex-shrink: 0; }
+.sensorName { flex: 1; font-size: 12px; color: var(--text-secondary); font-weight: 500; }
+.sensorQty { font-family: var(--font-heading); font-size: 11px; font-weight: 700; color: var(--primary); background: var(--primary-lighter); border: 1px solid var(--primary-light); padding: 1px 6px; border-radius: var(--r-xs); }
+
+/* Needs chart */
+.needsChart { display: flex; flex-direction: column; gap: 8px; }
+.needsRow { display: flex; align-items: center; gap: 10px; }
+.needsLabel { font-size: 11.5px; font-weight: 600; color: var(--text-secondary); width: 88px; flex-shrink: 0; }
+.needsTrack { flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.needsFill { height: 100%; border-radius: 2px; transition: width 0.5s ease; }
+.needsVal { font-size: 10px; font-weight: 600; color: var(--text-muted); width: 56px; text-align: right; flex-shrink: 0; }
+.noData { font-size: 12px; color: var(--text-muted); font-style: italic; }
+
+/* Hints */
+.hintList { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.hintItem { display: flex; align-items: flex-start; gap: 10px; font-size: 12.5px; color: var(--text-secondary); line-height: 1.55; }
+.hintNum { font-family: var(--font-heading); font-size: 10px; font-weight: 800; color: var(--primary); width: 18px; height: 18px; border-radius: var(--r-xs); background: var(--primary-lighter); border: 1px solid var(--primary-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+
+/* Summary table */
+.sumTable { width: 100%; border-collapse: collapse; }
+.sumRow td, .sumRowHl td { padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+.sumRow:last-child td, .sumRowHl:last-child td { border-bottom: none; }
+.sumLabel { color: var(--text-muted); font-weight: 600; width: 45%; font-size: 11.5px; }
+.sumValue { color: var(--text); font-weight: 500; text-align: right; }
+.sumRowHl .sumValue { color: var(--primary-dark); font-weight: 700; font-family: var(--font-heading); font-size: 12.5px; }
+.sumRowHl .sumLabel { color: var(--text-secondary); }
+
+/* Freitext */
+.freitext { font-size: 12.5px; color: var(--text-secondary); line-height: 1.65; font-style: italic; }
+
+/* Send */
+.sendText { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px; }
+.sendBtn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 13px; background: var(--primary); color: #fff; border-radius: var(--r-md); font-family: var(--font-heading); font-size: 13px; font-weight: 700; letter-spacing: 0.01em; transition: background var(--transition), box-shadow var(--transition); box-shadow: 0 2px 8px rgba(27,95,166,0.3); }
+.sendBtn:hover:not(:disabled) { background: var(--primary-dark); }
+.sendBtn:disabled { opacity: 0.65; cursor: not-allowed; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .grid { grid-template-columns: 1fr 300px; }
+}
+
+@media (max-width: 860px) {
+  .grid { grid-template-columns: 1fr; }
+  .right { order: -1; }
+  .analysisRow { flex-wrap: wrap; gap: 16px; }
+  .page { padding: 16px 12px 40px; }
+}
+
+@media (max-width: 768px) {
+  .page { padding: 14px 12px 40px; }
+  .pageHeader { flex-direction: column; gap: 8px; }
+  .sendBtn { min-height: 44px; }
+  .successPage { padding: 20px; }
+  .successCard { padding: 28px 20px; }
+  .sensorTable { overflow-x: auto; }
+}

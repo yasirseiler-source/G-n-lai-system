@@ -1,0 +1,121 @@
+.wrapper { margin-bottom: 20px; }
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.count {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--primary-lighter);
+  border: 1px solid var(--primary-light);
+  padding: 2px 8px;
+  border-radius: var(--r-sm);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border);
+  background: var(--white);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.card:hover {
+  border-color: var(--primary);
+  background: var(--primary-lighter);
+}
+.card.active {
+  border-color: var(--primary);
+  background: var(--primary-lighter);
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.checkBox {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--r-xs);
+  border: 1.5px solid var(--border-strong);
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+.card.active .checkBox {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.statusTag {
+  font-size: 10px;
+  font-weight: 700;
+  font-family: var(--font-heading);
+  padding: 1px 6px;
+  border-radius: var(--r-xs);
+  letter-spacing: 0.03em;
+  border: 1px solid;
+}
+.statusActive {
+  background: var(--status-green-bg);
+  color: var(--status-green);
+  border-color: #B3DCC7;
+}
+.statusInactive {
+  background: var(--gray-100);
+  color: var(--text-muted);
+  border-color: var(--border);
+}
+
+.cardName {
+  font-family: var(--font-heading);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+}
+.card.active .cardName { color: var(--primary-dark); }
+
+.cardDesc {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 480px) {
+  .grid { grid-template-columns: 1fr; }
+}
