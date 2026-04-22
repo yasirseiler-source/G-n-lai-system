@@ -1,7 +1,7 @@
 .page {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 28px 60px;
+  padding: 0 28px 80px;
 }
 
 /* ══ HERO ═══════════════════════════════════════════════════════════ */
@@ -20,7 +20,6 @@
   box-shadow: 0 2px 16px rgba(91,141,184,0.07);
 }
 
-/* Subtiler Hintergrund-Verlauf */
 .hero::before {
   content: '';
   position: absolute;
@@ -32,7 +31,6 @@
   z-index: 0;
 }
 
-/* Linke Spalte */
 .heroLeft {
   position: relative;
   z-index: 2;
@@ -40,7 +38,6 @@
   min-width: 0;
 }
 
-/* Rechte Spalte */
 .heroRight {
   position: relative;
   z-index: 2;
@@ -50,7 +47,6 @@
   justify-content: center;
 }
 
-/* Visual wrapper + half-circle mask (wie Wiseye) */
 .heroVisualWrap {
   width: 440px;
   height: 440px;
@@ -62,7 +58,7 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
+  border-radius: 50%;
   background: radial-gradient(ellipse at 50% 45%, rgba(91,141,184,0.06) 0%, rgba(128,192,155,0.04) 60%, transparent 100%);
 }
 
@@ -72,7 +68,6 @@
   display: block;
 }
 
-/* Eyebrow — Wiseye-Style */
 .heroEyebrow {
   display: flex;
   align-items: center;
@@ -94,7 +89,6 @@
   flex-shrink: 0;
 }
 
-/* Titel: WISE (dünn) + NESS (fett) — Wiseye letter-spacing */
 .heroTitle {
   font-size: 4rem;
   line-height: 1;
@@ -112,7 +106,6 @@
   color: #6F6F6F;
 }
 
-/* Slogan / Headline — Wiseye-Style */
 .heroHeadline {
   font-size: 20px;
   font-weight: 600;
@@ -123,7 +116,6 @@
   max-width: 460px;
 }
 
-/* Beschreibungstext — grau, kleiner */
 .heroText {
   color: #6C6C6C;
   font-size: 14px;
@@ -132,7 +124,6 @@
   max-width: 460px;
 }
 
-/* Buttons */
 .heroBtns {
   display: flex;
   gap: 12px;
@@ -142,6 +133,7 @@
 .btnPrimary {
   display: inline-flex;
   align-items: center;
+  gap: 8px;
   height: 42px;
   padding: 0 26px;
   background: #5B8DB8;
@@ -176,7 +168,6 @@
 }
 .btnOutline:hover { border-color: #5B8DB8; background: rgba(91,141,184,0.06); color: #4a7ba5; }
 
-/* Hintergrund-Gitter-Dekoration */
 .heroGrid {
   position: absolute;
   inset: 0;
@@ -188,31 +179,58 @@
   z-index: 1;
 }
 
-/* ══ DIVIDER ═════════════════════════════════════════════════════════ */
-.divider {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 20px;
-  color: var(--text-muted);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-.divider::before, .divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--border);
+/* ══ SECTION (gemeinsamer Wrapper) ══════════════════════════════════ */
+.section {
+  margin-bottom: 48px;
 }
 
-/* ══ CARDS ═══════════════════════════════════════════════════════════ */
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.sectionEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #5B8DB8;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.sectionEyebrowLine {
+  display: inline-block;
+  width: 20px;
+  height: 1px;
+  background: #5B8DB8;
+  opacity: 0.65;
+  flex-shrink: 0;
+}
+
+.sectionTitle {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+.sectionSubtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ══ BRANCHE-CARDS (Sektion 3) ═══════════════════════════════════════ */
 .cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  margin-bottom: 24px;
 }
 
 .card {
@@ -315,39 +333,374 @@
   letter-spacing: 0.01em;
 }
 
-/* ══ FEATURE BAR ═════════════════════════════════════════════════════ */
-.featureBar {
+/* ══ WAS IST WISENESS (Sektion 4) ════════════════════════════════════ */
+.whatGrid {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 56px;
+  align-items: center;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 48px 52px;
+  box-shadow: 0 2px 12px rgba(91,141,184,0.06);
+}
+
+.whatText {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.whatTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 20px;
+  line-height: 1.3;
+}
+
+.whatDesc {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-bottom: 14px;
+}
+
+.whatPillars {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.whatPillar {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.whatPillarDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.whatPillarLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.whatPillarDesc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.whatVisual {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 40px;
-  padding: 16px 24px;
-  background: var(--white);
-  border-radius: var(--r-md);
-  border: 1px solid var(--border);
 }
 
-.feature {
+.whatVisualWrap {
+  width: 100%;
+  max-width: 380px;
+}
+
+.whatSvg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ══ FEATURES GRID (Sektion 5) ═══════════════════════════════════════ */
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.featureCard {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 22px 20px;
+  transition: all 0.18s ease;
+}
+.featureCard:hover {
+  border-color: rgba(91,141,184,0.35);
+  box-shadow: 0 4px 16px rgba(91,141,184,0.1);
+  transform: translateY(-1px);
+}
+
+.featureIconBox {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--r-md);
+  background: rgba(91,141,184,0.08);
+  border: 1px solid rgba(91,141,184,0.16);
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.featureCardTitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.featureCardDesc {
   font-size: 12px;
-  font-weight: 500;
   color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ══ USE CASES (Sektion 6) ════════════════════════════════════════════ */
+.usecasesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.usecaseCard {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 28px;
+  transition: all 0.18s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.usecaseCard:hover {
+  border-color: var(--uc-color, var(--primary));
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  transform: translateY(-2px);
+}
+
+.usecaseIconWrap {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.usecaseTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.usecaseDesc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 16px;
+  flex: 1;
+}
+
+.usecaseTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.usecaseTag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: var(--r-sm);
+  border: 1px solid;
+  background: transparent;
+}
+
+.usecaseBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 10px 0 0;
+  border-top: 1px solid var(--border);
+  width: 100%;
+  transition: opacity 0.15s;
+}
+.usecaseBtn:hover { opacity: 0.75; }
+
+/* ══ LOGIK / ORIENTIERUNG (Sektion 7) ════════════════════════════════ */
+.logicSection {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 52px 56px;
+  box-shadow: 0 2px 12px rgba(91,141,184,0.06);
+}
+
+.logicSteps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.logicSteps::before {
+  content: '';
+  position: absolute;
+  top: 28px;
+  left: calc(100% / 6);
+  right: calc(100% / 6);
+  height: 1px;
+  background: linear-gradient(90deg, #5B8DB8 0%, #80C09B 50%, #5B8DB8 100%);
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.logicStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  padding: 24px 20px;
+  border-radius: var(--r-lg);
+  background: rgba(91,141,184,0.025);
+  border: 1px solid rgba(91,141,184,0.1);
+  transition: all 0.18s ease;
+}
+.logicStep:hover {
+  background: rgba(91,141,184,0.05);
+  border-color: rgba(91,141,184,0.25);
+}
+
+.logicStepNum {
+  font-size: 28px;
+  font-weight: 700;
+  color: #5B8DB8;
+  opacity: 0.3;
+  font-family: var(--font-heading);
+  line-height: 1;
+}
+
+.logicStepConnector {
+  display: none;
+}
+
+.logicStepContent {
+  flex: 1;
+}
+
+.logicStepTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.logicStepDesc {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.trustBox {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 24px;
+  background: rgba(91,141,184,0.04);
+  border: 1px solid rgba(91,141,184,0.14);
+  border-radius: var(--r-md);
+  margin-bottom: 40px;
+}
+
+.trustIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(91,141,184,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.trustTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.trustDesc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.ctaBox {
+  text-align: center;
+  padding-top: 36px;
+  border-top: 1px solid var(--border);
+}
+
+.ctaEyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: #80C09B;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.ctaTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 24px;
+  line-height: 1.45;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* ══ RESPONSIVE ══════════════════════════════════════════════════════ */
 @media (max-width: 1024px) {
-  .page { padding: 0 18px 48px; }
+  .page { padding: 0 18px 60px; }
   .hero { padding: 40px 36px; gap: 28px; }
   .heroTitle { font-size: 3rem; letter-spacing: 0.22em; }
   .heroRight { flex: 0 0 360px; }
   .heroVisualWrap { width: 360px; height: 360px; }
   .cards { grid-template-columns: repeat(2, 1fr); }
+  .featuresGrid { grid-template-columns: repeat(2, 1fr); }
+  .whatGrid { grid-template-columns: 1fr; }
+  .whatVisual { order: -1; }
+  .whatVisualWrap { max-width: 280px; margin: 0 auto; }
+  .logicSection { padding: 40px 36px; }
 }
 
 @media (max-width: 768px) {
-  .page { padding: 0 12px 40px; }
+  .page { padding: 0 12px 48px; }
   .hero {
     flex-direction: column-reverse;
     padding: 32px 24px;
@@ -355,18 +708,19 @@
     min-height: auto;
     gap: 24px;
   }
-  .heroRight {
-    flex: none;
-    width: 100%;
-    justify-content: center;
-  }
+  .heroRight { flex: none; width: 100%; justify-content: center; }
   .heroVisualWrap { width: 300px; height: 300px; }
   .heroTitle { font-size: 2.6rem; letter-spacing: 0.18em; }
   .heroHeadline { font-size: 17px; }
   .heroText { font-size: 13px; margin-bottom: 24px; }
   .cards { grid-template-columns: 1fr; gap: 12px; }
-  .featureBar { flex-direction: column; gap: 12px; align-items: flex-start; padding: 14px 16px; }
-  .card { padding: 18px; }
+  .featuresGrid { grid-template-columns: repeat(2, 1fr); }
+  .usecasesGrid { grid-template-columns: 1fr; gap: 12px; }
+  .logicSteps { grid-template-columns: 1fr; gap: 12px; }
+  .logicSteps::before { display: none; }
+  .logicSection { padding: 28px 20px; }
+  .whatGrid { padding: 28px 20px; gap: 28px; }
+  .section { margin-bottom: 32px; }
 }
 
 @media (max-width: 480px) {
@@ -374,4 +728,6 @@
   .heroVisualWrap { width: 240px; height: 240px; }
   .heroBtns { flex-direction: column; }
   .btnPrimary, .btnOutline { width: 100%; justify-content: center; }
+  .featuresGrid { grid-template-columns: 1fr; }
+  .sectionTitle { font-size: 20px; }
 }
