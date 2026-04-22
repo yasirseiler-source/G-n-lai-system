@@ -68,7 +68,7 @@ export const translations = {
     portal: {
       title:         'Yeni Müşteri Talebi',
       subtitle:      'Otomatik olarak atanacak:',
-      sourceLabel:   'Kaynak: employee',
+      sourceLabel:   'Kaynak: çalışan',
       companyLabel:  'Şirket Adı / Müşteri Adı',
       companyPh:     'örn. Örnek A.Ş.',
       emailLabel:    'E-posta',
@@ -399,7 +399,7 @@ export const translations = {
       whatEyebrow: 'WISENESS NEDİR?',
       whatTitle: 'Süreçler için akıllı yönetim zemini',
       whatDesc1: 'Wiseness, bakım, üretim ve kurumsal alanlardaki süreçleri yapay zekâ destekli bir sistem mantığıyla bir araya getiren profesyonel bir yönetim platformudur. Geleneksel araçların aksine, Wiseness yalnızca veri toplamaz — anlar, yapılandırır ve yönlendirir.',
-      whatDesc2: 'Üç temel sektöre odaklanan sistem — Pflege/Klinik, Fabrika/Üretim ve Şirket/Ofis — her kurumun ihtiyaçlarına göre esnek biçimde yapılandırılabilir. Her modül bağımsız çalışır; ancak birlikte kapsamlı bir yönetim ekosistemi oluşturur.',
+      whatDesc2: 'Üç temel sektöre odaklanan sistem — Bakım/Klinik, Fabrika/Üretim ve Şirket/Ofis — her kurumun ihtiyaçlarına göre esnek biçimde yapılandırılabilir. Her modül bağımsız çalışır; ancak birlikte kapsamlı bir yönetim ekosistemi oluşturur.',
       whatDesc3: 'Wiseness, insan odaklı tasarlanmıştır. Teknoloji ek baskı oluşturmamalı — hafifletmeli, netlik sağlamalı ve doğru kararlar alınmasını desteklemelidir. Çünkü iyi yönetilen bir kurum, daha güvenli ve daha verimli bir ortamdır.',
       whatPillar1Label: 'Gerçek Zamanlı Süreç Görünümü',
       whatPillar1Desc: 'Tüm süreçler canlı olarak izlenir ve yapılandırılır',
@@ -513,7 +513,7 @@ export const translations = {
     portal: {
       title:         'Neue Kundenanfrage',
       subtitle:      'Wird automatisch zugeordnet:',
-      sourceLabel:   'Quelle: employee',
+      sourceLabel:   'Quelle: Mitarbeiter',
       companyLabel:  'Firmenname / Kundenname',
       companyPh:     'z.B. Mustermann GmbH',
       emailLabel:    'E-Mail',
@@ -573,7 +573,7 @@ export const translations = {
       editEmployee:    'Mitarbeiter bearbeiten',
       statTotal:       'Gesamt',
       statActive:      'Aktiv',
-      statAdmins:      'Admins',
+      statAdmins:      'Administratoren',
       commissionNote:  'Provision wird nur hier festgelegt — nicht im Kundenformular änderbar.',
     },
     lead: {
