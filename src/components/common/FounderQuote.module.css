@@ -1,0 +1,177 @@
+.section {
+  background: #FAFBFC;
+  padding: 56px 0 64px;
+  position: relative;
+}
+
+.inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── Card ── */
+.card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Vertical accent bar ── */
+.accentBar {
+  width: 6px;
+  min-height: 100%;
+  border-radius: 6px 0 0 6px;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+
+/* ── Body ── */
+.body {
+  position: relative;
+  flex: 1;
+  padding: 40px 40px 36px 36px;
+}
+
+/* ── Large decorative opening quote ── */
+.openingQuote {
+  position: absolute;
+  top: -10px;
+  left: 28px;
+  font-size: 7rem;
+  line-height: 1;
+  color: #E8ECF0;
+  font-family: Georgia, 'Times New Roman', serif;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.heading {
+  position: relative;
+  z-index: 1;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8E9BAA;
+  margin: 0 0 22px 0;
+}
+
+/* ── Text block with multiple paragraphs ── */
+.textBlock {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0 0 8px 0;
+}
+
+.text {
+  font-size: 1.04rem;
+  line-height: 1.82;
+  color: #3A4550;
+  margin: 0;
+  font-style: italic;
+}
+
+/* ── Closing quote ── */
+.closingQuote {
+  position: relative;
+  z-index: 1;
+  text-align: right;
+  font-size: 2.4rem;
+  line-height: 1;
+  color: #D8DDE2;
+  font-family: Georgia, 'Times New Roman', serif;
+  margin: 4px 0 20px 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── Divider above author ── */
+.divider {
+  position: relative;
+  z-index: 1;
+  height: 1px;
+  background: #EDF0F3;
+  margin: 0 0 20px 0;
+}
+
+/* ── Author area ── */
+.author {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Initials circle */
+.authorInitials {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.authorInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.authorName {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #2B3740;
+  letter-spacing: 0.01em;
+}
+
+.authorRole {
+  font-size: 0.78rem;
+  color: #8E9BAA;
+  letter-spacing: 0.02em;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .section {
+    padding: 40px 0 48px;
+  }
+
+  .inner {
+    padding: 0 16px;
+  }
+
+  .body {
+    padding: 28px 20px 24px 20px;
+  }
+
+  .openingQuote {
+    font-size: 5rem;
+    top: -8px;
+    left: 14px;
+  }
+
+  .text {
+    font-size: 0.97rem;
+  }
+
+  .closingQuote {
+    font-size: 1.8rem;
+  }
+}
