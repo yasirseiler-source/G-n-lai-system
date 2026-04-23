@@ -13,6 +13,10 @@ import EmployeeLogin from './components/auth/EmployeeLogin'
 import EmployeePortal from './components/auth/EmployeePortal'
 import AdminPanel from './components/admin/AdminPanel'
 import WhatsAppButton from './components/common/WhatsAppButton'
+import DemoAccessGate from './components/demo/DemoAccessGate'
+import DemoPflege from './components/demo/DemoPflege'
+import DemoFabrik from './components/demo/DemoFabrik'
+import DemoUnternehmen from './components/demo/DemoUnternehmen'
 import './styles/globals.css'
 
 function AppInner() {
@@ -38,6 +42,10 @@ function AppInner() {
       if (targetPage === 'login')            { setPage('login'); return }
       if (targetPage === 'employee-portal')  { setPage('employee-portal'); return }
       if (targetPage === 'admin')            { setPage('admin'); return }
+      if (targetPage === 'demo-gate')        { setPage('demo-gate'); return }
+      if (targetPage === 'demo-pflege')      { setPage('demo-pflege'); return }
+      if (targetPage === 'demo-fabrik')      { setPage('demo-fabrik'); return }
+      if (targetPage === 'demo-unternehmen') { setPage('demo-unternehmen'); return }
     },
     [activeVerticalId, state]
   )
@@ -98,6 +106,20 @@ function AppInner() {
       )}
       {page === 'admin' && !isAdmin && (
         <EmployeeLogin onLogin={handleLogin} loginError={loginError} onClearError={() => setLoginError('')} />
+      )}
+
+      {/* ── Demo-Seiten ── */}
+      {page === 'demo-gate' && (
+        <DemoAccessGate onAccess={() => navigate('demo-pflege')} />
+      )}
+      {page === 'demo-pflege' && (
+        <DemoPflege onBack={() => navigate('landing')} />
+      )}
+      {page === 'demo-fabrik' && (
+        <DemoFabrik onBack={() => navigate('landing')} />
+      )}
+      {page === 'demo-unternehmen' && (
+        <DemoUnternehmen onBack={() => navigate('landing')} />
       )}
 
       {/* ── WhatsApp Floating Button ── */}
