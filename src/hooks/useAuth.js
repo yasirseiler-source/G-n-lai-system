@@ -1,60 +1,81 @@
-import { useState, useCallback } from 'react'
-import { useEmployees } from '../context/EmployeesContext'
-import { sanitizeEmployee } from '../data/employees'
+import { useState } from 'react'
+import { supabase } from '../lib/supabase'
 
 /**
- * useAuth – Authentifizierungs-Hook (Frontend-Demo)
+ * useAuth – Authentifizierung ueber Supabase `users`-Tabelle
  *
- * ⚠️ SICHERHEITSHINWEIS:
- * - Login läuft lokal gegen den EmployeesContext – NUR für Demo.
- * - Im Produktionsbetrieb:
- *   POST /api/auth/login → JWT / HttpOnly-Cookie
- *   Jede geschützte Anfrage mit Token absichern
- *   Provision + Rolle IMMER serverseitig prüfen
- *
- * TODO: fetch('POST /api/auth/login', { username, password })
- *       → { token, employee: { employeeId, fullName, role, ... } }
+ * SICHERHEITSHINWEIS (Produktion):
+ * - Passwoerter sollten serverseitig gehasht werden (bcrypt/argon2).
+ * - Aktuell: Klartext-Passwortvergleich in der DB-Abfrage.
+ *   TODO: Auf serverseitige Passwort-Hashing-Pruefung (bcrypt) umstellen,
+ *         sobald das Backend-Auth-System implementiert ist.
  */
 export function useAuth() {
-  const { findByCredentials } = useEmployees()
   const [currentEmployee, setCurrentEmployee] = useState(null)
-  const [loginError, setLoginError]           = useState('')
+  const [loginError, setLoginError] = useState('')
 
-  const login = useCallback((username, password) => {
-    // Demo: lokaler Abgleich via EmployeesContext (inkl. neu angelegter Mitarbeiter)
-    // TODO (Backend): POST /api/auth/login
-    const found = findByCredentials(username, password)
+  async function login(email, password) {
+    setLoginError('')
 
-    if (!found) {
+    if (!supabase) {
       setLoginError('errorCreds')
       return { ok: false }
     }
-    if (!found.isActive) {
+
+    const { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('email', email)
+      .eq('password', password)
+      .maybeSingle()
+
+    if (error) {
+      setLoginError('errorCreds')
+      return { ok: false }
+    }
+
+    if (!data) {
+      setLoginError('errorCreds')
+      return { ok: false }
+    }
+
+    if (!data.is_active) {
       setLoginError('errorInactive')
       return { ok: false }
     }
 
-    const safe = sanitizeEmployee(found)
-    setCurrentEmployee(safe)
-    setLoginError('')
-    return { ok: true, langPref: safe.languagePreference }
-  }, [findByCredentials])
-
-  const logout = useCallback(() => {
-    setCurrentEmployee(null)
-    setLoginError('')
-    // TODO (Backend): POST /api/auth/logout → Token invalidieren
-  }, [])
-
-  /**
-   * Aktualisierten Mitarbeiter nach Admin-Bearbeitung in Session übernehmen.
-   * Wird von AdminPanel aufgerufen wenn der eingeloggte Admin sich selbst bearbeitet.
-   */
-  const refreshCurrentEmployee = useCallback((updatedEmp) => {
-    if (currentEmployee && updatedEmp.employeeId === currentEmployee.employeeId) {
-      setCurrentEmployee(sanitizeEmployee(updatedEmp))
+    const mappedUser = {
+      employeeId: data.id,
+      fullName: data.name,
+      email: data.email,
+      role: data.role,
+      isActive: data.is_active,
+      commissionType: data.commission_type,
+      commissionValue: Number(data.commission_value ?? 0),
+      languagePreference: data.language_preference ?? 'de',
+      createdAt: data.created_at,
     }
-  }, [currentEmployee])
+
+    setCurrentEmployee(mappedUser)
+
+    return {
+      ok: true,
+      langPref: mappedUser.languagePreference,
+      role: mappedUser.role,
+    }
+  }
+
+  function logout() {
+    setCurrentEmployee(null)
+  }
+
+  const isAdmin = currentEmployee?.role === 'admin'
+
+  function refreshCurrentEmployee(updatedEmp) {
+    if (updatedEmp && currentEmployee?.employeeId === updatedEmp.employeeId) {
+      setCurrentEmployee(updatedEmp)
+    }
+  }
 
   return {
     currentEmployee,
@@ -62,8 +83,7 @@ export function useAuth() {
     logout,
     loginError,
     setLoginError,
-    isAdmin:    currentEmployee?.role === 'admin',
-    isLoggedIn: currentEmployee !== null,
+    isAdmin,
     refreshCurrentEmployee,
   }
 }

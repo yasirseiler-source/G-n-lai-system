@@ -1,85 +1,153 @@
-import { createContext, useContext, useState, useCallback } from 'react'
-import { employees as initialEmployees } from '../data/employees'
+import { createContext, useContext, useState, useCallback, useEffect } from 'react'
+import { supabase } from '../lib/supabase'
 
 /**
- * EmployeesContext – Gemeinsamer Mitarbeiter-State für AdminPanel + useAuth
+ * EmployeesContext – Mitarbeiter-State mit Supabase als Datenquelle
  *
- * ⚠️ SICHERHEITSHINWEIS:
- * - Daten leben nur im React-State (Reload = Reset auf Demo-Daten).
- * - Im Produktionsbetrieb:
- *   GET    /api/employees   → initiale Liste laden
- *   POST   /api/employees   → neuen Mitarbeiter anlegen
- *   PATCH  /api/employees/:id → Mitarbeiter aktualisieren
- * - Passwörter MÜSSEN serverseitig mit bcrypt/argon2 gehasht werden.
- * - Rollenprüfung MUSS serverseitig erfolgen.
+ * Alle CRUD-Operationen schreiben direkt in die Supabase `users`-Tabelle.
+ *
+ * SICHERHEITSHINWEIS (Produktion):
+ * - Passwoerter sollten serverseitig gehasht werden (bcrypt/argon2).
+ * - Rollenpruefung sollte ueber RLS-Policies in Supabase erfolgen.
  */
 
 const EmployeesContext = createContext(null)
 
-export function EmployeesProvider({ children }) {
-  // TODO (Backend): GET /api/employees → initiale Liste aus DB laden
-  const [employees, setEmployees] = useState(() =>
-    initialEmployees.map(e => ({ ...e }))
-  )
+/** Supabase-Zeile → Frontend-Objekt */
+function mapUser(user) {
+  return {
+    employeeId: user.id,
+    fullName: user.name,
+    email: user.email,
+    role: user.role,
+    isActive: user.is_active,
+    commissionType: user.commission_type,
+    commissionValue: Number(user.commission_value ?? 0),
+    languagePreference: user.language_preference ?? 'de',
+    createdAt: user.created_at,
+  }
+}
 
-  /**
-   * Mitarbeiter hinzufügen
-   * TODO (Backend): POST /api/employees → gibt neue employeeId + createdAt zurück
-   */
-  const addEmployee = useCallback((data) => {
-    const newEmp = {
-      ...data,
-      commissionValue: Number(data.commissionValue),
-      employeeId: `emp-${Date.now()}`,
-      createdAt: new Date().toISOString(),
+/** Frontend-Objekt → Supabase-Payload (ohne id/created_at) */
+function toDbPayload(data, includePassword = false) {
+  const payload = {
+    name: data.fullName,
+    email: data.email,
+    role: data.role,
+    is_active: data.isActive !== false,
+    commission_type: data.commissionType,
+    commission_value: Number(data.commissionValue),
+    language_preference: data.languagePreference || 'de',
+  }
+  if (includePassword && data.password) {
+    payload.password = data.password
+  }
+  return payload
+}
+
+export function EmployeesProvider({ children }) {
+  const [employees, setEmployees] = useState([])
+
+  useEffect(() => {
+    async function loadEmployees() {
+      if (!supabase) return
+
+      const { data, error } = await supabase
+        .from('users')
+        .select('id, created_at, name, email, role, commission_type, commission_value, is_active, language_preference')
+
+      if (error) {
+        console.error('[EmployeesContext] Laden fehlgeschlagen:', error)
+        return
+      }
+
+      setEmployees((data || []).map(mapUser))
     }
-    console.log('[EmployeesContext] POST /api/employees', {
-      ...newEmp,
-      _demoPassword: '***', // Passwort nicht loggen
-    })
-    setEmployees(prev => [...prev, newEmp])
-    return newEmp
+
+    loadEmployees()
   }, [])
 
   /**
-   * Mitarbeiter aktualisieren
-   * TODO (Backend): PATCH /api/employees/:id
-   * - Provision MUSS serverseitig aus DB gelesen werden
-   * - Passwort MUSS serverseitig gehasht gespeichert werden
+   * Mitarbeiter hinzufuegen – INSERT in Supabase
    */
-  const updateEmployee = useCallback((id, data) => {
-    const updated = {
-      ...data,
-      commissionValue: Number(data.commissionValue),
+  const addEmployee = useCallback(async (data) => {
+    if (!supabase) return null
+    const dbPayload = toDbPayload(data, true)
+
+    const { data: inserted, error } = await supabase
+      .from('users')
+      .insert(dbPayload)
+      .select()
+      .single()
+
+    if (error) {
+      console.error('[EmployeesContext] INSERT fehlgeschlagen:', error)
+      return null
     }
-    console.log('[EmployeesContext] PATCH /api/employees/' + id, {
-      ...updated,
-      _demoPassword: updated._demoPassword ? '***' : undefined,
-    })
+
+    const mapped = mapUser(inserted)
+    setEmployees(prev => [...prev, mapped])
+    return mapped
+  }, [])
+
+  /**
+   * Mitarbeiter aktualisieren – UPDATE in Supabase
+   */
+  const updateEmployee = useCallback(async (id, data) => {
+    if (!supabase) return null
+    const dbPayload = toDbPayload(data, !!data.password)
+
+    const { error } = await supabase
+      .from('users')
+      .update(dbPayload)
+      .eq('id', id)
+
+    if (error) {
+      console.error('[EmployeesContext] UPDATE fehlgeschlagen:', error)
+      return null
+    }
+
+    const updated = {
+      employeeId: id,
+      fullName: data.fullName,
+      email: data.email,
+      role: data.role,
+      isActive: data.isActive !== false,
+      commissionType: data.commissionType,
+      commissionValue: Number(data.commissionValue),
+      languagePreference: data.languagePreference || 'de',
+      createdAt: data.createdAt,
+    }
+
     setEmployees(prev => prev.map(e =>
       e.employeeId === id ? updated : e
     ))
+
     return updated
   }, [])
 
   /**
-   * Aktivieren / Deaktivieren
-   * TODO (Backend): PATCH /api/employees/:id { isActive }
+   * Aktivieren / Deaktivieren – UPDATE is_active in Supabase
    */
-  const toggleActive = useCallback((id) => {
-    setEmployees(prev => prev.map(e =>
-      e.employeeId === id ? { ...e, isActive: !e.isActive } : e
-    ))
-  }, [])
+  const toggleActive = useCallback(async (id) => {
+    const emp = employees.find(e => e.employeeId === id)
+    if (!emp || !supabase) return
 
-  /**
-   * Mitarbeiter per Login-Daten finden
-   * ⚠️ Nur Demo – Produktionsbetrieb: POST /api/auth/login → Token
-   */
-  const findByCredentials = useCallback((username, password) => {
-    return employees.find(
-      e => e.username === username && e._demoPassword === password
-    ) || null
+    const newStatus = !emp.isActive
+
+    const { error } = await supabase
+      .from('users')
+      .update({ is_active: newStatus })
+      .eq('id', id)
+
+    if (error) {
+      console.error('[EmployeesContext] Toggle-Status fehlgeschlagen:', error)
+      return
+    }
+
+    setEmployees(prev => prev.map(e =>
+      e.employeeId === id ? { ...e, isActive: newStatus } : e
+    ))
   }, [employees])
 
   return (
@@ -88,7 +156,6 @@ export function EmployeesProvider({ children }) {
       addEmployee,
       updateEmployee,
       toggleActive,
-      findByCredentials,
     }}>
       {children}
     </EmployeesContext.Provider>
