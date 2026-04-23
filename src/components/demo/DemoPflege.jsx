@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import styles from './DemoPflege.module.css'
 import DemoAccessGate from './DemoAccessGate'
-import FounderQuote from '../common/FounderQuote'
 
 // ─── Data ───────────────────────────────────────────────────────────────────
 const initialState = {
@@ -280,9 +279,6 @@ function PflegeDashboard({ onBack }) {
           })}
         </div>
       </div>
-
-      {/* FOUNDER QUOTE */}
-      <FounderQuote textKey="landing" accentColor="#80C09B" />
 
       {/* MAIN GRID */}
       <main className={styles.main}>

@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import styles from './DemoFabrik.module.css'
 import DemoAccessGate from './DemoAccessGate'
-import FounderQuote from '../common/FounderQuote'
 
 // ─── Data ───────────────────────────────────────────────────────────────────
 const tickerItems = [
@@ -197,9 +196,6 @@ function FabrikDashboard({ onBack }) {
           </div>
         </div>
       </div>
-
-      {/* FOUNDER QUOTE */}
-      <FounderQuote textKey="landing" accentColor="#477A9E" />
 
       <div className={styles.main}>
         {/* [1] KPIs */}

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import styles from './DemoUnternehmen.module.css'
 import DemoAccessGate from './DemoAccessGate'
-import FounderQuote from '../common/FounderQuote'
 
 // ─── Data ───────────────────────────────────────────────────────────────────
 const DATA = {
@@ -190,9 +189,6 @@ function UnternehmenDashboard({ onBack }) {
           </div>
         </div>
       </header>
-
-      {/* FOUNDER QUOTE */}
-      <FounderQuote textKey="landing" accentColor="#5B8DB8" />
 
       {/* LAYOUT */}
       <div className={styles.layout}>
