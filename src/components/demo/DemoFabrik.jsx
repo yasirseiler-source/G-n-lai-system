@@ -199,7 +199,7 @@ function FabrikDashboard({ onBack }) {
       </div>
 
       {/* FOUNDER QUOTE */}
-      <FounderQuote variant="fabrik" accentColor="#477A9E" />
+      <FounderQuote textKey="landing" accentColor="#477A9E" />
 
       <div className={styles.main}>
         {/* [1] KPIs */}

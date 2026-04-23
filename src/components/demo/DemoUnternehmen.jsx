@@ -192,7 +192,7 @@ function UnternehmenDashboard({ onBack }) {
       </header>
 
       {/* FOUNDER QUOTE */}
-      <FounderQuote variant="unternehmen" accentColor="#5B8DB8" />
+      <FounderQuote textKey="landing" accentColor="#5B8DB8" />
 
       {/* LAYOUT */}
       <div className={styles.layout}>

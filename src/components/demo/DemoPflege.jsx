@@ -282,7 +282,7 @@ function PflegeDashboard({ onBack }) {
       </div>
 
       {/* FOUNDER QUOTE */}
-      <FounderQuote variant="pflege" accentColor="#80C09B" />
+      <FounderQuote textKey="landing" accentColor="#80C09B" />
 
       {/* MAIN GRID */}
       <main className={styles.main}>
