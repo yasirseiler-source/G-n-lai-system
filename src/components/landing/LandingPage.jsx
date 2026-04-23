@@ -338,13 +338,6 @@ export default function LandingPage({ onNavigate }) {
             >
               {th('ctaDemo') || t('landing', 'ctaContact')}
             </button>
-            <button
-              className={styles.btnOutline}
-              style={{ borderColor: '#5B8DB8', color: '#5B8DB8' }}
-              onClick={() => onNavigate && onNavigate('demo-gate')}
-            >
-              Demo Zugang
-            </button>
           </div>
         </div>
 
@@ -399,6 +392,31 @@ export default function LandingPage({ onNavigate }) {
               </div>
             </button>
           ))}
+        </div>
+
+        {/* Demo-Buttons für 3 Bereiche */}
+        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginTop: '32px', flexWrap: 'wrap' }}>
+          <button
+            className={styles.btnOutline}
+            style={{ borderColor: '#5B8DB8', color: '#5B8DB8' }}
+            onClick={() => onNavigate && onNavigate('demo-pflege')}
+          >
+            Demo: Pflege
+          </button>
+          <button
+            className={styles.btnOutline}
+            style={{ borderColor: '#80C09B', color: '#80C09B' }}
+            onClick={() => onNavigate && onNavigate('demo-fabrik')}
+          >
+            Demo: Fabrik
+          </button>
+          <button
+            className={styles.btnOutline}
+            style={{ borderColor: '#5B8DB8', color: '#5B8DB8' }}
+            onClick={() => onNavigate && onNavigate('demo-unternehmen')}
+          >
+            Demo: Unternehmen
+          </button>
         </div>
       </section>
 
