@@ -338,6 +338,13 @@ export default function LandingPage({ onNavigate }) {
             >
               {th('ctaDemo') || t('landing', 'ctaContact')}
             </button>
+            <button
+              className={styles.btnOutline}
+              style={{ borderColor: '#5B8DB8', color: '#5B8DB8' }}
+              onClick={() => onNavigate && onNavigate('demo-gate')}
+            >
+              Demo Zugang
+            </button>
           </div>
         </div>
 
